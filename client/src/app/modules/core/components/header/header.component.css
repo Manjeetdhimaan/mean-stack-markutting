@@ -1,0 +1,13 @@
+.header__area-3 {
+  background-color: #c8f31d9f;
+  backdrop-filter: blur(15px);
+}
+
+.menu-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.header__brand {
+  color: var(--black-2)
+}
