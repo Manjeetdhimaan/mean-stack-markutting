@@ -1,19 +1,19 @@
 <header class="header__area-3">
   <div class="header__inner-3">
     <div class="header__logo-2">
-      <a routerLink="/" class="logo-dark"><h2 class="header__brand">Markutting</h2></a>
-      <a routerLink="/" class="logo-light"><h2 class="header__brand">Markutting</h2></a>
+      <a routerLink="/" (click)="scrollTop()" (click)="scrollTop()" class="logo-dark"><h2 class="header__brand">Markutting</h2></a>
+      <a routerLink="/" (click)="scrollTop()" class="logo-light"><h2 class="header__brand">Markutting</h2></a>
     </div>
     <!-- <div class="header__logo-2">
-      <a routerLink="/" class="logo-dark"><img src="assets/imgs/logo/logo-black.png" alt="Site Logo"></a>
-      <a routerLink="/" class="logo-light"><img src="assets/imgs/logo/site-logo-white-2.png" alt="Site Logo"></a>
+      <a routerLink="/" (click)="scrollTop()" class="logo-dark"><img src="assets/imgs/logo/logo-black.png" alt="Site Logo"></a>
+      <a routerLink="/" (click)="scrollTop()" class="logo-light"><img src="assets/imgs/logo/site-logo-white-2.png" alt="Site Logo"></a>
     </div> -->
     <div class="header__nav-2">
       <ul class="main-menu-3 menu-anim">
-        <li><a routerLink="/"><div class="menu-text"><span>h</span><span>o</span><span>m</span><span>e</span></div></a>
+        <li><a routerLink="/" (click)="scrollTop()"><div class="menu-text"><span>h</span><span>o</span><span>m</span><span>e</span></div></a>
         </li>
-        <li><a routerLink="/about"><div class="menu-text"><span>a</span><span>b</span><span>o</span><span>u</span><span>t</span></div></a></li>
-        <li class="has-megamenu"><a routerLink="/about"><div class="menu-text"><span>P</span><span>a</span><span>g</span><span>e</span><span>s</span></div></a>
+        <li><a routerLink="/about" (click)="scrollTop()"><div class="menu-text"><span>a</span><span>b</span><span>o</span><span>u</span><span>t</span></div></a></li>
+        <li class="has-megamenu"><a routerLink="/about" (click)="scrollTop()"><div class="menu-text"><span>P</span><span>a</span><span>g</span><span>e</span><span>s</span></div></a>
           <ul class="mega-menu">
             <li>
               <a>Service</a>
@@ -80,7 +80,7 @@
             <li>
               <a>Others</a>
               <ul>
-                <li><a routerLink="/about">about</a></li>
+                <li><a routerLink="/about" (click)="scrollTop()">about</a></li>
                 <li><a href="about-dark.html">about dark</a></li>
                 <li><a href="faq.html">FAQs</a></li>
                 <li><a href="faq-dark.html">FAQs dark</a></li>
@@ -144,7 +144,7 @@
       <div class="offcanvas__body">
         <div class="offcanvas__left">
           <div class="offcanvas__logo">
-            <a routerLink="/"><img src="assets/imgs/logo/site-logo-white-2.png" alt="Offcanvas Logo"></a>
+            <a routerLink="/" (click)="scrollTop()"><img src="assets/imgs/logo/site-logo-white-2.png" alt="Offcanvas Logo"></a>
           </div>
           <div class="offcanvas__social">
             <h3 class="social-title">Follow Us</h3>
@@ -159,7 +159,7 @@
           </div>
           <div class="offcanvas__links">
             <ul>
-              <li><a routerLink="/about">About</a></li>
+              <li><a routerLink="/about" (click)="scrollTop()">About</a></li>
               <li><a href="contact.html">contact</a></li>
               <li><a href="career.html">Career</a></li>
               <li><a href="blog.html">blog</a></li>
@@ -171,7 +171,7 @@
               <ul class="menu-anim">
                 <li><a><div class="menu-text"><span>h</span><span>o</span><span>m</span><span>e</span></div></a>
                   <ul style="display: none;">
-                    <li><a routerLink="/">Digital Maketing</a></li>
+                    <li><a routerLink="/" (click)="scrollTop()">Digital Maketing</a></li>
                     <li><a href="index-dark.html">Digital Maketing dark</a></li>
                     <li><a href="index-2.html">Design Studio </a></li>
                     <li><a href="index-2-dark.html">Design Studio dark</a></li>
@@ -205,7 +205,7 @@
                     <li><a href="index-11.html">Interactive hover showcase</a></li>
                   </ul>
                 <a class="mean-expand" href="#" style="font-size: 36px">+</a></li>
-                <li><a routerLink="/about"><div class="menu-text"><span>a</span><span>b</span><span>o</span><span>u</span><span>t</span></div></a></li>
+                <li><a routerLink="/about" (click)="scrollTop()"><div class="menu-text"><span>a</span><span>b</span><span>o</span><span>u</span><span>t</span></div></a></li>
                 <li>
                   <a><div class="menu-text"><span>S</span><span>e</span><span>r</span><span>v</span><span>i</span><span>c</span><span>e</span></div></a>
                   <ul style="display: none;">
@@ -293,7 +293,7 @@
                     <li>
                       <a>Others</a>
                       <ul style="display: none;">
-                        <li><a routerLink="/about">about</a></li>
+                        <li><a routerLink="/about" (click)="scrollTop()">about</a></li>
                         <li><a href="about-dark.html">about dark</a></li>
                         <li><a href="faq.html">FAQs</a></li>
                         <li><a href="faq-dark.html">FAQs dark</a></li>
@@ -324,7 +324,7 @@
               <ul class="menu-anim">
                 <li><a><div class="menu-text"><span>h</span><span>o</span><span>m</span><span>e</span></div></a>
                   <ul>
-                    <li><a routerLink="/">Digital Maketing</a></li>
+                    <li><a routerLink="/" (click)="scrollTop()">Digital Maketing</a></li>
                     <li><a href="index-dark.html">Digital Maketing dark</a></li>
                     <li><a href="index-2.html">Design Studio </a></li>
                     <li><a href="index-2-dark.html">Design Studio dark</a></li>
@@ -358,7 +358,7 @@
                     <li><a href="index-11.html">Interactive hover showcase</a></li>
                   </ul>
                 </li>
-                <li><a routerLink="/about"><div class="menu-text"><span>a</span><span>b</span><span>o</span><span>u</span><span>t</span></div></a></li>
+                <li><a routerLink="/about" (click)="scrollTop()"><div class="menu-text"><span>a</span><span>b</span><span>o</span><span>u</span><span>t</span></div></a></li>
                 <li>
                   <a><div class="menu-text"><span>S</span><span>e</span><span>r</span><span>v</span><span>i</span><span>c</span><span>e</span></div></a>
                   <ul>
@@ -445,7 +445,7 @@
                     <li>
                       <a>Others</a>
                       <ul>
-                        <li><a routerLink="/about">about</a></li>
+                        <li><a routerLink="/about" (click)="scrollTop()">about</a></li>
                         <li><a href="about-dark.html">about dark</a></li>
                         <li><a href="faq.html">FAQs</a></li>
                         <li><a href="faq-dark.html">FAQs dark</a></li>

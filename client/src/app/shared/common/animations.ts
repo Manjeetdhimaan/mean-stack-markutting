@@ -40,6 +40,19 @@ export function fallIn() {
   ]);
 }
 
+export function slideDown() {
+  return trigger('slideDown', [
+    transition(':enter', [
+      style({transform:'translateY(-100%)'}),
+      animate('.3s ease-in-out', style({transform:'translateY(0)'}))
+    ]),
+    transition(':leave', [
+      style({transform:'translateY(0)'}),
+      animate('.3s ease-in-out', style({transform:'translateY(-100%)'}))
+    ])
+  ]);
+}
+
 export function moveInLeft() {
   return trigger('moveInLeft', [
     transition(':enter', [
