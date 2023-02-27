@@ -9,6 +9,7 @@ import { filter, map } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  isDarkMode: boolean = false;
   title = 'Markutting';
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title) {
@@ -60,6 +61,7 @@ export class AppComponent {
 
   toggleDarkMode() {
     document.body.classList.toggle('dark');
+    this.isDarkMode = !this.isDarkMode;
   }
 
 }

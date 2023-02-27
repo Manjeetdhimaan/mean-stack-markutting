@@ -3,7 +3,8 @@
         <div class="footer__top-3">
           <div class="footer__top-wrapper-3">
             <div class="footer__logo-3 pt-120">
-              <img src="assets/imgs/logo/site-logo-white-2.png" alt="Footer Logo">
+              <h2 class="header__brand">Markutting</h2>
+              <!-- <img src="assets/imgs/logo/site-logo-white-2.png" alt="Footer Logo"> -->
               <p>When do they work well, and when do they on us and finally, when do we actually need how can we avoid
                 them.</p>
             </div>
@@ -16,7 +17,7 @@
               </ul>
             </div>
             <div class="footer__contact-3">
-              <a class="end" href="contact.html">Let’s talk</a>
+              <a class="end" routerLink="/contact" (click)="scrollTop()">Let’s talk</a>
             </div>
           </div>
         </div>
@@ -26,7 +27,7 @@
             <div class="row">
               <div class="col-xxl-4 col-xl-4 col-lg-6">
                 <div class="footer__copyright-3">
-                  <p>© 2023 | All rights reserved by <a routerLink="/about" (click)="scrollTop()" target="_blank">Markutting</a>
+                  <p>© 2023 | All rights reserved by <a routerLink="/" (click)="scrollTop()" >Markutting</a>
                   </p>
                 </div>
               </div>
@@ -34,7 +35,7 @@
                 <div class="footer__nav-2">
                   <ul class="footer-menu-2 menu-anim">
                     <li><a routerLink="/about" (click)="scrollTop()">about us</a></li>
-                    <li><a href="contact.html">contact</a></li>
+                    <li><a routerLink="/contact" (click)="scrollTop()">contact</a></li>
                     <li><a href="career.html">Career</a></li>
                     <li><a href="faq.html">FAQs</a></li>
                   </ul>

@@ -2,7 +2,7 @@
     <!-- Switcher Area Start -->
     <div class="switcher__area">
       <div class="switcher__icon" style="right: 0;">
-        <button id="switcher_open" style="display: inline-block;" (click)="toggleDarkMode()"><i class="fa-solid fa-gear"></i></button>
+        <button  style="display: inline-block;" (click)="toggleDarkMode()"><i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i></button>
         <button id="switcher_close" style="display: none;"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="switcher__items" style="right: -280px;">

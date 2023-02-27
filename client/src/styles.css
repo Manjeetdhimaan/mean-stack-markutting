@@ -2009,6 +2009,16 @@ img {
           filter: invert(1);
 }
 
+
+.dark .label {
+  color: var(--white)
+}
+
+
+.label {
+  color: var(--black-2)
+}
+
 /*----------------------------------------*/
 /*  07. Button CSS START
 /*----------------------------------------*/
@@ -10170,11 +10180,11 @@ img {
   }
 }
 .workflow__wrapper-3 {
-  width: 400%;
+  /* width: 400%; */
   height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  /* display: flex; */
   -ms-flex-wrap: no-wrap;
       flex-wrap: no-wrap;
 }
@@ -10328,7 +10338,7 @@ img {
 @media only screen and (min-width: 1200px) and (max-width: 1399px) {
   .choose-title {
     font-size: 160px;
-    margin-top: -100px;
+    /* margin-top: -100px; */
   }
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {

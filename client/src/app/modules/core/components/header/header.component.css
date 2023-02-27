@@ -9,5 +9,5 @@
 }
 
 .header__brand {
-  color: var(--black-2)
+  font-size: 32px;
 }
