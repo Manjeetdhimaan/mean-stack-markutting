@@ -103,6 +103,10 @@
   src: url("https://wealcoder.com/assets/fonts/newyork/FontsFree-Net-NewYork.ttf");
   font-weight: 400;
 }
+
+a {
+  cursor: pointer;
+}
 /*----------------------------------------*/
 /*  02. MIXIN CSS START
 /*----------------------------------------*/
@@ -112,6 +116,7 @@
 .pb-100 {
   padding-bottom: 100px;
 }
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .pb-100 {
     padding-bottom: 90px;
@@ -20233,24 +20238,24 @@ img {
   border-bottom: 1px solid var(--black-2);
 }
 .contact__form input::-webkit-input-placeholder, .contact__form textarea::-webkit-input-placeholder {
-  color: var(--black-2);
+  /* color: var(--black-2); */
   opacity: 1;
 }
 .contact__form input::-moz-placeholder, .contact__form textarea::-moz-placeholder {
-  color: var(--black-2);
+  /* color: var(--black-2); */
   opacity: 1;
 }
 .contact__form input:-ms-input-placeholder, .contact__form textarea:-ms-input-placeholder {
-  color: var(--black-2);
+  /* color: var(--black-2); */
   opacity: 1;
 }
 .contact__form input::-ms-input-placeholder, .contact__form textarea::-ms-input-placeholder {
-  color: var(--black-2);
+  /* color: var(--black-2); */
   opacity: 1;
 }
 .contact__form input::placeholder,
 .contact__form textarea::placeholder {
-  color: var(--black-2);
+  /* color: var(--black-2); */
   opacity: 1;
 }
 .contact__form textarea {

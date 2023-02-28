@@ -4,9 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AllvideocheckoutComponent } from './components/allvideocheckout/allvideocheckout.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { UserRoutingModule } from './user-routing.module';
-
-
+import { AdvertiserRoutingModule } from './advertiser-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -15,8 +14,9 @@ import { UserRoutingModule } from './user-routing.module';
   ],
   imports: [
     CommonModule,
-    UserRoutingModule,
-    ReactiveFormsModule
+    AdvertiserRoutingModule,
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
-export class UserModule { }
+export class AdvertiserModule { }
