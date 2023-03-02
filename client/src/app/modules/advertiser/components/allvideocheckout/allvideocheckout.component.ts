@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 import { fallIn } from 'src/app/shared/common/animations';
+import { OrderApiService } from 'src/app/shared/services/order-api.service';
 
 @Component({
   selector: 'app-allvideocheckout',
@@ -12,13 +13,13 @@ import { fallIn } from 'src/app/shared/common/animations';
 })
 export class AllvideocheckoutComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private el: ElementRef){}
+  constructor( private fb: FormBuilder, private el: ElementRef, private orderService: OrderApiService ){}
 
   checkoutForm: FormGroup;
   previewLink: string;
   submitted: boolean = false;
 
-  targetAudienceArray: Array<any> = [
+  targetAndWantsArray: Array<any> = [
     { name: 'Likes & Comments', value: 'Likes & Comments', id: 'likes' },
     { name: 'Subscribers', value: 'Subscribers', id: 'subscribers' },
     { name: 'Installs', value: 'Installs', id: 'installs' }
@@ -45,7 +46,7 @@ export class AllvideocheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.checkoutForm = this.fb.group({
       youtubeLink: new FormControl('', [Validators.required]),
-      targetAudience: new FormArray([]),
+      targetAndWants: new FormArray([]),
       gender: new FormControl(null),
       age: new FormControl(null),
       location: new FormControl(null, [Validators.required]),
@@ -64,18 +65,18 @@ export class AllvideocheckoutComponent implements OnInit {
     return +this.f['budget'].value * 5;
   }
 
-  onTargetAudienceCheckboxChange(event: any) {
-    const selectedTargetAudience = (this.checkoutForm.controls['targetAudience'] as FormArray);
+  onTargetAndWantsCheckboxChange(event: any) {
+    const selectedTargetAndWants = (this.checkoutForm.controls['targetAndWants'] as FormArray);
     if (event.target.checked) {
-      selectedTargetAudience.push(new FormControl(event.target.value));
+      selectedTargetAndWants.push(new FormControl(event.target.value));
     } else {
-      const index = selectedTargetAudience.controls
+      const index = selectedTargetAndWants.controls
       .findIndex(x => x.value === event.target.value);
-      selectedTargetAudience.removeAt(index);
+      selectedTargetAndWants.removeAt(index);
     }
   }
 
-  showVideoThumbnail() {
+showVideoThumbnail() {
     const id = this.f['youtubeLink'].value;
     const i1 = id.indexOf("=");
     let idRefined = id.substring(i1 + 1, id.length);
@@ -108,7 +109,11 @@ export class AllvideocheckoutComponent implements OnInit {
       }
       return;
     }
-    Object.assign({}, this.checkoutForm.value,  {views: this.onCountTotalViews() });
-    console.log(Object.assign({}, this.checkoutForm.value, { views: this.onCountTotalViews() }));
+    const formBody = Object.assign({}, this.checkoutForm.value,  {views: this.onCountTotalViews() });
+    this.orderService.postPlaceOrder(formBody).subscribe(res => {
+      console.log(res);
+    }, err => {
+      console.log(err);
+    })
   }
 }

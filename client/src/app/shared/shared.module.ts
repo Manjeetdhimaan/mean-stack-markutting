@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SafePipe } from './pipes/safe.pipe';
 import { ContactDataComponent } from './components/reusuable-components/contact-data/contact-data.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -11,7 +12,8 @@ import { ContactDataComponent } from './components/reusuable-components/contact-
     ContactDataComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
   exports: [
     SafePipe,

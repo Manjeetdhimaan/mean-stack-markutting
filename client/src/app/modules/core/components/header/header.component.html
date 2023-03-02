@@ -16,7 +16,7 @@
         <li><a routerLink="/" (click)="scrollTop()"><div class="menu-text"><span>h</span><span>o</span><span>m</span><span>e</span></div></a>
         </li>
         <li><a routerLink="/about" (click)="scrollTop()"><div class="menu-text"><span>a</span><span>b</span><span>o</span><span>u</span><span>t</span></div></a></li>
-        <li><a routerLink="/about" (click)="scrollTop()"><div class="menu-text"><span>P</span><span>a</span><span>g</span><span>e</span><span>s</span></div></a>
+        <li><a routerLink="/advertiser/allvideocheckout" (click)="scrollTop()"><div class="menu-text"><span>P</span><span>r</span><span>o</span><span>m</span><span>o</span><span>t</span><span>e</span></div></a>
         </li>
         <li><a href="portfolio.html"><div class="menu-text"><span>s</span><span>e</span><span>r</span><span>v</span><span>i</span><span>c</span><span>e</span><span>s</span></div></a>
           <ul class="main-dropdown">
@@ -24,19 +24,8 @@
               <ul class="sub-dropdown">
                 <li><a href="service-dark.html">service dark</a></li>
                 <li><a href="service-2-dark.html">service V.2 dark</a></li>
-                <li><a href="service-3-dark.html">service V.3 dark</a></li>
-                <li><a href="service-4-dark.html">service V.4 dark</a></li>
-                <li><a href="service-5-dark.html">service V.5 dark</a></li>
-                <li><a href="service-6-dark.html">service V.6 dark</a></li>
-                <li><a href="service-details-dark.html">service details dark</a></li>
               </ul>
             </li>
-            <li><a href="service-2.html">service V.2</a></li>
-            <li><a href="service-3.html">service V.3</a></li>
-            <li><a href="service-4.html">service V.4</a></li>
-            <li><a href="service-5.html">service V.5</a></li>
-            <li><a href="service-6.html">service V.6</a></li>
-            <li><a href="service-details.html">service details</a></li>
           </ul>
         </li>
         <li><a href="blog.html"><div class="menu-text"><span>b</span><span>l</span><span>o</span><span>g</span></div></a>
@@ -60,7 +49,7 @@
           <ul class="main-dropdown">
             <li><a (click)="scrollTop()"
               routerLink="/advertiser/allvideocheckout">Promote Video</a></li>
-            <li><a (click)="scrollTop()"
+            <li *ngIf="!isLoggedIn()"><a (click)="scrollTop()"
               routerLink="/auth/user/login">Login</a></li>
           </ul>
         </li>

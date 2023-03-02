@@ -33,6 +33,7 @@
                       <small *ngIf="(f['password'].hasError('required') && f['password'].touched) || (f['password'].hasError('required') && submitted)" class="has-error">Password is required</small>
                     </div>
                   </div>
+                  <small *ngIf="serverErrorMessages?.trim()" class="has-error"> {{ serverErrorMessages }}</small>
                   <p class="link">Don't have an account?
                     <a routerLink="/auth/user/register" (click)="scrollTop()">Register here</a>
                   </p>

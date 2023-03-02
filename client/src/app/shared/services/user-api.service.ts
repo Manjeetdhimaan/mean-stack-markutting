@@ -2,6 +2,31 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+
+export interface LoginResponse {
+  success: boolean;
+  message: string;
+  token: string;
+  _id: string;
+}
+
+export interface SignupResponse {
+  success: boolean;
+  message: string;
+}
+
+interface LoginData {
+  email: string;
+  password: string
+}
+
+interface SignupData {
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -12,60 +37,40 @@ export class UserApiService {
 
   noAuthHeader = { headers: new HttpHeaders({ 'NoAuth': 'True' }) };
 
-  postRegisterUser(user: any){
-    return this.http.post(environment.apiBaseUrl+'/user/register',user,this.noAuthHeader);
+  postRegisterUser(user: SignupData): Observable<SignupResponse>{
+    return this.http.post<SignupResponse>(environment.apiBaseUrl+'/users/register-user', user, this.noAuthHeader);
   }
 
-  postUserLogin(authCredentials:any) {
-    return this.http.post(environment.apiBaseUrl + '/user/authenticate', authCredentials,this.noAuthHeader);
+  postUserLogin(authCredentials:LoginData): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(environment.apiBaseUrl + '/users/authenticate', authCredentials, this.noAuthHeader);
   }
 
   getUserProfile() {
-    return this.http.get(environment.apiBaseUrl + '/user/getUserProfile');
-  }
-
-  postPlaceOrder(order:any) {
-    return this.http.post(environment.apiBaseUrl + '/user/postCreateOrder', order);
+    return this.http.get(environment.apiBaseUrl + '/users/getUserProfile');
   }
 
   postContactForm(form:any) {
-    return this.http.post(environment.apiBaseUrl + '/user/post-contact-form', form);
-  }
-
-  postAppointMentForm(form:any) {
-    return this.http.post(environment.apiBaseUrl + '/user/postAppointMentForm', form);
-  }
-
-  postOrderResponse(order:any) {
-    return this.http.post(environment.apiBaseUrl + '/user/postOrderResponse', order);
+    return this.http.post(environment.apiBaseUrl + '/users/post-contact-form', form);
   }
 
   postUpdateUserProfile(userBody:any) {
-    return this.http.patch(environment.apiBaseUrl + '/user/patchUpdateUserProfile', userBody);
-  }
-
-  getUserOrders() {
-    return this.http.get(environment.apiBaseUrl + '/user/getUserOrders');
-  }
-
-  getUserOrder(orderId: string) {
-    return this.http.get(environment.apiBaseUrl + '/user/getUserOrder/' + orderId);
+    return this.http.patch(environment.apiBaseUrl + '/users/patchUpdateUserProfile', userBody);
   }
 
   putChangePassword(passwordBody:any) {
-    return this.http.put(environment.apiBaseUrl + `/user/change-password`, passwordBody);
+    return this.http.put(environment.apiBaseUrl + `/users/change-password`, passwordBody);
   }
 
   requestResetPassword(body:any) {
-    return this.http.post(`${environment.apiBaseUrl}/user/req-reset-password`, body);
+    return this.http.post(`${environment.apiBaseUrl}/users/req-reset-password`, body);
   }
 
   newPassword(body:any){
-    return this.http.post(`${environment.apiBaseUrl}/user/new-password`, body);
+    return this.http.post(`${environment.apiBaseUrl}/users/new-password`, body);
   }
 
   validatePasswordToken(body:any) {
-    return this.http.post(`${environment.apiBaseUrl}/user/valid-password-token`, body);
+    return this.http.post(`${environment.apiBaseUrl}/users/valid-password-token`, body);
   }
 
   //Helper Methods

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { fallIn } from 'src/app/shared/common/animations';
+import { UserApiService } from 'src/app/shared/services/user-api.service';
 
 @Component({
   selector: 'app-header',
@@ -12,8 +13,14 @@ export class HeaderComponent {
 
   isMenuOpen: boolean = false;
 
+  constructor( private userApiService: UserApiService ){}
+
   toggleMenu () {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  isLoggedIn() {
+    return this.userApiService.isLoggedIn();
   }
 
   scrollTop() {
@@ -21,5 +28,4 @@ export class HeaderComponent {
       top: 0
     });
   }
-
 }

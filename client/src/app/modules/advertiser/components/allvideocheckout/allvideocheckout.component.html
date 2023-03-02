@@ -62,9 +62,9 @@
                   VIEWS, I ALSO WANT:</h3>
               </div>
               <div class="col-xxl-12 col-xl-12 col-12">
-                <span *ngFor="let audiene of targetAudienceArray; let i=index">
-                  <input (change)="onTargetAudienceCheckboxChange($event)"
-                    type="checkbox" formArrayName="targetAudience"
+                <span *ngFor="let audiene of targetAndWantsArray; let i=index">
+                  <input (change)="onTargetAndWantsCheckboxChange($event)"
+                    type="checkbox" formArrayName="targetAndWants"
                     [id]="audiene.id" [value]="audiene.value" class="checkbox"><label
                     class="label" [for]="audiene.id">{{ audiene.name}}</label>
                 </span>

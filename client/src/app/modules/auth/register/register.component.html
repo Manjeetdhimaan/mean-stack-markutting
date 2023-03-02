@@ -24,8 +24,8 @@
                 <form [formGroup]="signupForm" (ngSubmit)="submitForm()">
                   <div class="row g-3">
                     <div class="col-xxl-6 col-xl-6 col-12">
-                      <input type="text" formControlName="name" placeholder="Your Name *">
-                      <small *ngIf="(f['name'].hasError('required') && f['name'].touched) || (f['name'].hasError('required') && submitted)" class="has-error">Name is required</small>
+                      <input type="text" formControlName="fullName" placeholder="Your Name *">
+                      <small *ngIf="(f['fullName'].hasError('required') && f['fullName'].touched) || (f['fullName'].hasError('required') && submitted)" class="has-error">Name is required</small>
                     </div>
                     <div class="col-xxl-6 col-xl-6 col-12">
                       <input type="email" formControlName="email" placeholder="Email *">
@@ -44,6 +44,7 @@
                       f['password'].hasError('confirmedValidator')" class="has-error">Passwords do not match.</small>
                     </div>
                   </div>
+                  <small *ngIf="serverErrorMessages?.trim()" class="has-error"> {{ serverErrorMessages }}</small>
                   <p class="link">Already have a account?
                     <a routerLink="/auth/user/login" (click)="scrollTop()">Login here</a>
                   </p>

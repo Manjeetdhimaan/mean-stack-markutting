@@ -1,6 +1,10 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { fallIn } from 'src/app/shared/common/animations';
+import { LoginResponse, UserApiService } from 'src/app/shared/services/user-api.service';
+
 
 @Component({
   selector: 'app-login',
@@ -12,8 +16,10 @@ import { fallIn } from 'src/app/shared/common/animations';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted: boolean = false;
+  isLoading: boolean = false;
+  serverErrorMessages: string;
 
-  constructor( private fb: FormBuilder, private el: ElementRef ) {}
+  constructor( private fb: FormBuilder, private el: ElementRef, private userApiService: UserApiService, private router: Router ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -28,6 +34,7 @@ export class LoginComponent implements OnInit {
 
   submitForm() {
     this.submitted = true;
+    this.serverErrorMessages = '';
     if(!this.loginForm.valid) {
       for (const key of Object.keys(this.f)) {
         if (this.f[key].invalid) {
@@ -38,7 +45,19 @@ export class LoginComponent implements OnInit {
       }
       return;
     }
-    console.log(this.loginForm.value);
+    this.isLoading = true;
+    this.userApiService.postUserLogin(this.loginForm.value).subscribe(
+      (res: LoginResponse) => {
+        this.userApiService.setToken(res['token']);
+        this.router.navigate([`/advertiser/allvideocheckout`]);
+        this.scrollTop();
+        this.isLoading = false;
+      },
+      err => {
+        this.serverErrorMessages = err.error['message'];
+        this.isLoading = false;
+      }
+    );
   }
 
   scrollTop() {
