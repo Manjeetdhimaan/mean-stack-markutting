@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
-
 const Order = mongoose.model('Order');
+const Razorpay = require('razorpay');
+
+const devenv = require('../devenv');
+
+let instance = new Razorpay({
+    key_id: process.env.KEY_ID || devenv.LOCAL_key_id,
+    key_secret: process.env.KEY_SECRET || devenv.LOCAL_key_secret,
+});
 
 module.exports.getOrders = (req, res, next) => {
     try {
@@ -77,7 +84,71 @@ module.exports.getOrder = (req, res, next) => {
 
 module.exports.postOrder = async (req, res, next) => {
     try {
-        const order = new Order({
+        let options = {
+            amount: +req.body.budget * 100, // amount in the smallest currency unit
+            currency: "INR",
+            payment_capture: +req.body.budget * 100
+        };
+
+        instance.orders.create(options, (err, order) => {
+            if (err) {
+                return next(err);
+            }
+            if (order) {
+                return res.status(200).send({
+                    success: true,
+                    message: 'Creating order',
+                    orderId: order.id,
+                    value: order,
+                    userId: req._id,
+                    key: process.env.KEY_ID || devenv.LOCAL_key_id
+                });
+            }
+        });
+
+        // const order = new Order({
+        //     razorPayOrderId: req.body.razorPayOrderId,
+        //     orderDetails: {
+        //         paymentStatus: 'Success',
+        //         payableTotal: req.body.payableTotal,
+        //         planPrice: req.body.planPrice,
+        //         youtubeLink: req.body.youtubeLink,
+        //         targetAndWants: req.body.targetAndWants,
+        //         location: req.body.location,
+        //         gender: req.body.gender,
+        //         age: req.body.age,
+        //         country: req.body.country,
+        //         videoCategory: req.body.videoCategory,
+        //         keywords: req.body.keywords,
+        //         budget: req.body.budget,
+        //         views: req.body.views
+        //     },
+        //     user: req._id
+        // });
+
+        // order.save().then((savedOrder) => {
+        //     if (!savedOrder) {
+        //         return res.status(503).send({
+        //             success: false,
+        //             message: 'Order can not be placed! Please try again.'
+        //         });
+        //     }
+        //     return res.status(201).send({
+        //         success: true,
+        //         message: 'Order placed succussfully!',
+        //         order: savedOrder
+        //     });
+        // }).catch(err => {
+        //     return next(err);
+        // })
+    } catch (err) {
+        return next(err);
+    }
+};
+
+module.exports.postOrderResponse = async (req, res, next) => {
+    try {
+         const order = new Order({
             razorPayOrderId: req.body.razorPayOrderId,
             orderDetails: {
                 paymentStatus: 'Success',
@@ -115,7 +186,7 @@ module.exports.postOrder = async (req, res, next) => {
     } catch (err) {
         return next(err);
     }
-};
+}
 
 module.exports.updateOrderStatus = (req, res, next) => {
     try {

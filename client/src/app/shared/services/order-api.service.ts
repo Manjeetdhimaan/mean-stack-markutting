@@ -15,7 +15,7 @@ export class OrderApiService {
   }
 
   postOrderResponse(order:any) {
-    return this.http.post(environment.apiBaseUrl + '/orders/postOrderResponse', order);
+    return this.http.post(environment.apiBaseUrl + '/orders/post-order-response', order);
   }
 
   getUserOrders() {

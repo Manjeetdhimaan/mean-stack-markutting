@@ -51,6 +51,8 @@
               routerLink="/advertiser/allvideocheckout">Promote Video</a></li>
             <li *ngIf="!isLoggedIn()"><a (click)="scrollTop()"
               routerLink="/auth/user/login">Login</a></li>
+            <li *ngIf="isLoggedIn()"><a (click)="onLogOut()"
+              routerLink="/auth/user/login">Logout</a></li>
           </ul>
         </li>
       </ul>

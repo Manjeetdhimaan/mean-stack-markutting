@@ -3,7 +3,9 @@ import { FormControl, Validators, FormBuilder, FormGroup, FormArray } from '@ang
 
 import { fallIn } from 'src/app/shared/common/animations';
 import { OrderApiService } from 'src/app/shared/services/order-api.service';
+import { environment } from 'src/environments/environment';
 
+declare let Razorpay: any;
 @Component({
   selector: 'app-allvideocheckout',
   templateUrl: './allvideocheckout.component.html',
@@ -11,6 +13,7 @@ import { OrderApiService } from 'src/app/shared/services/order-api.service';
   animations: [fallIn()],
   host: { '[@fallIn]': '' }
 })
+
 export class AllvideocheckoutComponent implements OnInit {
 
   constructor( private fb: FormBuilder, private el: ElementRef, private orderService: OrderApiService ){}
@@ -18,6 +21,21 @@ export class AllvideocheckoutComponent implements OnInit {
   checkoutForm: FormGroup;
   previewLink: string;
   submitted: boolean = false;
+  isLoading: boolean = false;
+  razorOrderId: string;
+  userId: string;
+  razorPayOptions = {
+    "key": "YOUR_KEY_ID", // Enter the Key ID generated from the Dashboard
+    "amount": 0, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Younedia",
+    "description": "Test Transaction",
+    "image": "/assets/images/logo/balancedyte-logo.png",
+    "order_id": "order_IluGWxBm9U8zJ8", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": (res: any) => {
+      console.log(res);
+    }
+  };
 
   targetAndWantsArray: Array<any> = [
     { name: 'Likes & Comments', value: 'Likes & Comments', id: 'likes' },
@@ -41,7 +59,7 @@ export class AllvideocheckoutComponent implements OnInit {
     { value:"Education", name: "Education", id:"Education" },
     { value:"Science and Technology", name: "Science and Technology", id:"Science and Technology" },
     { value:"Nonprofits and Activism", name: "Nonprofits and Activism", id:"Nonprofits and Activism" }
-  ]
+  ];
 
   ngOnInit(): void {
     this.checkoutForm = this.fb.group({
@@ -76,15 +94,15 @@ export class AllvideocheckoutComponent implements OnInit {
     }
   }
 
-showVideoThumbnail() {
-    const id = this.f['youtubeLink'].value;
-    const i1 = id.indexOf("=");
-    let idRefined = id.substring(i1 + 1, id.length);
-    if (idRefined.indexOf("&") != -1) {
-        idRefined = idRefined.substring(0, idRefined.indexOf("&"));
-    }
-    this.previewLink = "https://youtube.com/embed/" + idRefined;
-}
+  showVideoThumbnail() {
+      const id = this.f['youtubeLink'].value;
+      const i1 = id.indexOf("=");
+      let idRefined = id.substring(i1 + 1, id.length);
+      if (idRefined.indexOf("&") != -1) {
+          idRefined = idRefined.substring(0, idRefined.indexOf("&"));
+      }
+      this.previewLink = "https://youtube.com/embed/" + idRefined;
+  }
 
   onChangeLocation(event: any) {
     if(event.target.value.toLowerCase() === 'country') {
@@ -110,10 +128,62 @@ showVideoThumbnail() {
       return;
     }
     const formBody = Object.assign({}, this.checkoutForm.value,  {views: this.onCountTotalViews() });
-    this.orderService.postPlaceOrder(formBody).subscribe(res => {
+    this.orderService.postPlaceOrder(formBody).subscribe((res: any) => {
       console.log(res);
+      this.razorPayOptions.key = res['key'];
+        this.razorPayOptions.amount = res['value']['amount'];
+        this.razorPayOptions.name = res['name'];
+        this.razorPayOptions.currency = res['currency'];
+        this.razorPayOptions.order_id = res['orderId'];
+        this.razorOrderId = res['orderId'];
+        this.razorPayOptions.handler = this.razorPayResponseHandler.bind(this);
+        let rzp1 = new Razorpay(this.razorPayOptions);
+        rzp1.open();
+        rzp1.on('payment.failed', (response: any) => {
+          // Todo - store this information in the server
+          console.log(response);
+        }
+        );
     }, err => {
       console.log(err);
     })
+  }
+
+
+  razorPayResponseHandler(res: any) {
+    if (res) {
+      this.submitted = true;
+      if (!this.checkoutForm.valid) {
+        console.log('form not valid');
+        return;
+      }
+      this.isLoading = true;
+      const formBody = {
+        age: this.checkoutForm.value.age,
+        gender: this.checkoutForm.value.gender,
+        budget: this.checkoutForm.value.budget,
+        youtubeLink: this.checkoutForm.value.youtubeLink,
+        targetAndWants: this.checkoutForm.value.targetAndWants,
+        location: this.checkoutForm.value.location,
+        country: this.checkoutForm.value.country,
+        videoCategory: this.checkoutForm.value.videoCategory,
+        keywords: this.checkoutForm.value.keywords
+      }
+
+      const formObj = Object.assign({}, formBody, { domain: environment.domain, order_id: this.razorOrderId, userId: this.userId });
+
+      this.orderService.postOrderResponse(formObj).subscribe((res: any) => {
+        this.isLoading = false;
+        console.log(res)
+        // this.razorPayResMsg = res['message']
+        // this.toastMessageService.success(res['message']);
+          // this.router.navigate(['/account/profile/orders']);
+
+      }, error => {
+        this.isLoading = false;
+        // this.toastMessageService.error('An error occured with payment, please try again');
+        console.log("error", error);
+      })
+    }
   }
 }

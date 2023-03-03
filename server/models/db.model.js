@@ -12,3 +12,4 @@ mongoose.connect(process.env.MONGODB_URI || devENV.LOCAL_MONGODB_URI, { useUnifi
 require('./user.model');
 require('./order.model');
 require('./contact-detail.model');
+require('./currency.model');

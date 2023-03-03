@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { fallIn } from 'src/app/shared/common/animations';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
 
@@ -13,7 +15,7 @@ export class HeaderComponent {
 
   isMenuOpen: boolean = false;
 
-  constructor( private userApiService: UserApiService ){}
+  constructor( private userApiService: UserApiService, private router: Router ){}
 
   toggleMenu () {
     this.isMenuOpen = !this.isMenuOpen;
@@ -21,6 +23,12 @@ export class HeaderComponent {
 
   isLoggedIn() {
     return this.userApiService.isLoggedIn();
+  }
+
+  onLogOut() {
+    this.userApiService.deleteToken();
+    this.router.navigate(['/auth/user/login']);
+    this.scrollTop();
   }
 
   scrollTop() {
