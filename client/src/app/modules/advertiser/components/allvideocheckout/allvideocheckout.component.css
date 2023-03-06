@@ -39,3 +39,7 @@ select {
 .contact__form input, .contact__form textarea {
   margin-bottom: 0;
 }
+
+.contact__area-6 {
+  margin-top: 3rem;
+}

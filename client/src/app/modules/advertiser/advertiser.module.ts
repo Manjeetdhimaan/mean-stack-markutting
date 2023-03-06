@@ -6,11 +6,13 @@ import { AllvideocheckoutComponent } from './components/allvideocheckout/allvide
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AdvertiserRoutingModule } from './advertiser-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { OrdersComponent } from './components/dashboard/orders/orders.component';
 
 @NgModule({
   declarations: [
     AllvideocheckoutComponent,
-    DashboardComponent
+    DashboardComponent,
+    OrdersComponent
   ],
   imports: [
     CommonModule,

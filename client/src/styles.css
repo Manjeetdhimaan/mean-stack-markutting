@@ -6179,7 +6179,7 @@ img {
 .hero__area-3 .video-info {
   width: 300px;
   position: relative;
-  left: 500px;
+  left: 350px;
   top: -115px;
   height: 200px;
 }
@@ -6976,32 +6976,7 @@ img {
 }
 .hero__about-row {
   position: inherit;
-  margin-right: -310px;
-}
-@media only screen and (min-width: 1400px) and (max-width: 1919px) {
-  .hero__about-row {
-    margin-right: -50px;
-  }
-}
-@media only screen and (min-width: 1200px) and (max-width: 1399px) {
-  .hero__about-row {
-    margin-right: -150px;
-  }
-}
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-  .hero__about-row {
-    margin-right: -150px;
-  }
-}
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-  .hero__about-row {
-    margin-right: -120px;
-  }
-}
-@media only screen and (max-width: 767px) {
-  .hero__about-row {
-    margin-right: calc(-0.5 * var(--bs-gutter-x));
-  }
+  /* margin-right: -310px; */
 }
 .hero__link {
   display: inline-block;
@@ -8855,6 +8830,7 @@ img {
 }
 .service__item-3:hover .service__hover-3 {
   opacity: 1;
+  margin: 0 0 0 0;
 }
 .service__item-6 {
   height: 100vh;
@@ -8983,10 +8959,10 @@ img {
   background-repeat: no-repeat;
   background-position-x: 75%;
   opacity: 0;
-  -webkit-transition: opacity 0.3s, -webkit-transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-  transition: opacity 0.3s, -webkit-transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-  transition: opacity 0.3s, transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-  transition: opacity 0.3s, transform 0.7s cubic-bezier(0.23, 1, 0.32, 1), -webkit-transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transition: all 0.3s, -webkit-transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.3s, -webkit-transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.3s, transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.3s, transform 0.7s cubic-bezier(0.23, 1, 0.32, 1), -webkit-transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
   margin: -200px 0 0 -150px;
   overflow: hidden;
   pointer-events: none;

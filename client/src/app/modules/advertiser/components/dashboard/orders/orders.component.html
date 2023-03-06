@@ -1,0 +1,107 @@
+ <!-- Price area start -->
+<section class="price__area pt-130 pb-140">
+  <div class="container">
+    <div class="row">
+      <div class="col-xxl-12 col-xl-12 col-lg-12">
+        <div class="sec-title-wrapper">
+          <h2 class="sec-sub-title title-anim">Dashboard</h2>
+          <h3 class="sec-title title-anim">View Orders</h3>
+        </div>
+        <div class="faq__list-3">
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item" *ngFor="let order of orders; let i=
+              index">
+              <h2 class="accordion-header" id="{{'heading' + i}}">
+                <button class="accordion-button" type="button"
+                  data-bs-toggle="collapse"
+                  attr.data-bs-target="{{'#collapse' + i}}"
+                  aria-expanded="false"
+                  attr.aria-controls="{{'collapse' + i}}">
+                  Order Id: {{ order._id }}
+                </button>
+              </h2>
+              <div id="{{'collapse' + i}}" class="accordion-collapse collapse"
+                attr.aria-labelledby="{{'heading' + i}}"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <div class="accordion-body-main"><span
+                      class="accordion-body-header">Youtube Link: </span> <a
+                      [href]="order.orderDetails.youtubeLink" target="_blank">See
+                      video on youtube</a></div>
+
+                  <div class="accordion-body-main"><span
+                      class="accordion-body-header">Wants and target: </span>
+                    <span *ngFor="let want of
+                      order.orderDetails.targetAndWants">
+                      {{want}}.
+                    </span></div>
+
+                    <div class="accordion-body-main"><span
+                      class="accordion-body-header">Target Gender: </span> <span>{{order.orderDetails.gender}}</span></div>
+
+                    <div class="accordion-body-main"><span
+                      class="accordion-body-header">Target Age: </span> <span>{{order.orderDetails.age}}</span></div>
+
+                    <div class="accordion-body-main"><span
+                      class="accordion-body-header">Target Location: </span> <span>{{order.orderDetails.location}}</span></div>
+
+                    <div class="accordion-body-main" *ngIf="order.orderDetails.country"><span
+                      class="accordion-body-header">Target Country: </span> <span>{{order.orderDetails.country}}</span></div>
+
+                    <div class="accordion-body-main" *ngIf="order.orderDetails.videoCategory"><span
+                      class="accordion-body-header">Target Video Category: </span> <span>{{order.orderDetails.videoCategory}}</span></div>
+
+                    <div class="accordion-body-main" *ngIf="order.orderDetails.keywords"><span
+                      class="accordion-body-header">Target Keywords: </span> <span>{{ order.orderDetails.keywords}}</span></div>
+
+                    <div class="accordion-body-main"><span
+                      class="accordion-body-header">Budget Spent </span> <span>{{ order.orderDetails.budget | currency: order.orderDetails.currency }}</span></div>
+
+                    <div class="accordion-body-main"><span
+                      class="accordion-body-header">Views </span> <span>{{ order.orderDetails.views }}</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xxl-6 col-xl-6 col-lg-6">
+        <div class="price__table">
+          <div class="price__item animation_from_bottom">
+            <div class="price__icon"><span><i class="fa-solid fa-check"></i></span></div>
+            <div class="price__info">
+              <h2 class="price__type">Yearly</h2>
+              <h3 class="price__title">14 days free</h3>
+              <p>Subscription fee is $129.99 USD and automatically renews each
+                year.</p>
+            </div>
+            <div class="price__amount">
+              <h4 class="best-value">Best Value</h4>
+              <p>$129<span> .99</span></p>
+            </div>
+          </div>
+
+          <div class="price__item animation_from_top">
+            <div class="price__icon"><span><i class="fa-solid fa-check"></i></span></div>
+            <div class="price__info">
+              <h2 class="price__type">Monthly</h2>
+              <h3 class="price__title">7 days free</h3>
+              <p>Subscription fee is $12.99 USD and automatically renews each
+                year.</p>
+            </div>
+            <div class="price__amount">
+              <p>$12<span> .99</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="price__btn btn_wrapper">
+          <a href="contact.html" class="wc-btn-black btn-hover btn-item"><span></span>
+            Try it <br>Free Now <i
+              class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Price area end -->

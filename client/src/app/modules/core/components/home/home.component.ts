@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { OwlOptions } from 'ngx-owl-carousel-o/public_api';
 import { fallIn } from 'src/app/shared/common/animations';
 
 @Component({
@@ -9,5 +10,25 @@ import { fallIn } from 'src/app/shared/common/animations';
   host: { '[@fallIn]': '' }
 })
 export class HomeComponent {
+
+  customOptions: OwlOptions = {
+    loop: true,
+    autoplay: true,
+    center: true,
+    dots: false,
+    autoHeight: true,
+    autoWidth: true,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      600: {
+        items: 1,
+      },
+      1000: {
+        items: 1,
+      }
+    }
+  }
 
 }

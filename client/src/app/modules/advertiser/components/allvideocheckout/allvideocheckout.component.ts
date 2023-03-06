@@ -16,8 +16,6 @@ declare let Razorpay: any;
 
 export class AllvideocheckoutComponent implements OnInit {
 
-  constructor( private fb: FormBuilder, private el: ElementRef, private orderService: OrderApiService ){}
-
   checkoutForm: FormGroup;
   previewLink: string;
   submitted: boolean = false;
@@ -60,6 +58,8 @@ export class AllvideocheckoutComponent implements OnInit {
     { value:"Science and Technology", name: "Science and Technology", id:"Science and Technology" },
     { value:"Nonprofits and Activism", name: "Nonprofits and Activism", id:"Nonprofits and Activism" }
   ];
+
+  constructor( private fb: FormBuilder, private el: ElementRef, private orderService: OrderApiService ){}
 
   ngOnInit(): void {
     this.checkoutForm = this.fb.group({
@@ -129,7 +129,6 @@ export class AllvideocheckoutComponent implements OnInit {
     }
     const formBody = Object.assign({}, this.checkoutForm.value,  {views: this.onCountTotalViews() });
     this.orderService.postPlaceOrder(formBody).subscribe((res: any) => {
-      console.log(res);
       this.razorPayOptions.key = res['key'];
         this.razorPayOptions.amount = res['value']['amount'];
         this.razorPayOptions.name = res['name'];
@@ -149,12 +148,10 @@ export class AllvideocheckoutComponent implements OnInit {
     })
   }
 
-
   razorPayResponseHandler(res: any) {
     if (res) {
       this.submitted = true;
       if (!this.checkoutForm.valid) {
-        console.log('form not valid');
         return;
       }
       this.isLoading = true;
@@ -171,10 +168,9 @@ export class AllvideocheckoutComponent implements OnInit {
       }
 
       const formObj = Object.assign({}, formBody, { domain: environment.domain, order_id: this.razorOrderId, userId: this.userId });
-
       this.orderService.postOrderResponse(formObj).subscribe((res: any) => {
         this.isLoading = false;
-        console.log(res)
+        console.log(res);
         // this.razorPayResMsg = res['message']
         // this.toastMessageService.success(res['message']);
           // this.router.navigate(['/account/profile/orders']);

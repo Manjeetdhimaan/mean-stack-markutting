@@ -36,7 +36,7 @@ module.exports.getOrders = (req, res, next) => {
 
 module.exports.getUserOrders = (req, res, next) => {
     try {
-        Order.find({user: req._id}).populate('user').sort({
+        Order.find({user: req._id}).sort({
             'createdAt': -1
         }).then(userOrders => {
             if (!userOrders || userOrders.length < 1) {
