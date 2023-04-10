@@ -11,3 +11,9 @@
 .header__brand {
   font-size: 32px;
 }
+
+@media (min-width: 600px) {
+  #open_offcanvas {
+    display: none;
+  }
+}

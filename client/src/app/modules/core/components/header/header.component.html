@@ -1,11 +1,13 @@
 <header class="header__area-3">
   <div class="header__inner-3">
     <div class="header__logo-2">
-      <a routerLink="/" (click)="scrollTop()" (click)="scrollTop()"
-        class="logo-dark"><h3 class="header__brand sec-title title-anim
-          ng-tns-c19-3">Markutting</h3></a>
-      <a routerLink="/" (click)="scrollTop()" class="logo-light"><h3
-          class="header__brand sec-title title-anim ng-tns-c19-3">Markutting</h3></a>
+      <a routerLink="/" (click)="scrollTop()" (click)="scrollTop()" class="logo-dark">
+        <h3 class="header__brand sec-title title-anim
+          ng-tns-c19-3">Markutting</h3>
+      </a>
+      <a routerLink="/" (click)="scrollTop()" class="logo-light">
+        <h3 class="header__brand sec-title title-anim ng-tns-c19-3">Markutting</h3>
+      </a>
     </div>
     <!-- <div class="header__logo-2">
       <a routerLink="/" (click)="scrollTop()" class="logo-dark"><img src="assets/imgs/logo/logo-black.png" alt="Site Logo"></a>
@@ -13,31 +15,39 @@
     </div> -->
     <div class="header__nav-2">
       <ul class="main-menu-3 menu-anim">
-        <li><a routerLink="/" (click)="scrollTop()"><div class="menu-text"><span>h</span><span>o</span><span>m</span><span>e</span></div></a>
+        <li><a routerLink="/" (click)="scrollTop()">
+            <div class="menu-text"><span>h</span><span>o</span><span>m</span><span>e</span></div>
+          </a>
         </li>
-        <li><a routerLink="/about" (click)="scrollTop()"><div class="menu-text"><span>a</span><span>b</span><span>o</span><span>u</span><span>t</span></div></a></li>
-        <li><a routerLink="/advertiser/allvideocheckout" (click)="scrollTop()"><div class="menu-text"><span>P</span><span>r</span><span>o</span><span>m</span><span>o</span><span>t</span><span>e</span></div></a>
+        <li><a routerLink="/about" (click)="scrollTop()">
+            <div class="menu-text"><span>a</span><span>b</span><span>o</span><span>u</span><span>t</span></div>
+          </a></li>
+        <li><a routerLink="/advertiser/allvideocheckout" (click)="scrollTop()">
+            <div class="menu-text">
+              <span>P</span><span>r</span><span>o</span><span>m</span><span>o</span><span>t</span><span>e</span>
+            </div>
+          </a>
         </li>
-        <li><a href="portfolio.html"><div class="menu-text"><span>s</span><span>e</span><span>r</span><span>v</span><span>i</span><span>c</span><span>e</span><span>s</span></div></a>
-          <ul class="main-dropdown">
-            <li><a href="service.html">service</a>
-              <ul class="sub-dropdown">
-                <li><a href="service-dark.html">service dark</a></li>
-                <li><a href="service-2-dark.html">service V.2 dark</a></li>
-              </ul>
-            </li>
-          </ul>
+        <li><a routerLink="/contact" (click)="scrollTop()">
+            <div class="menu-text">
+              <span>c</span><span>o</span><span>n</span><span>t</span><span>a</span><span>c</span><span>t</span>
+            </div>
+          </a>
         </li>
-        <li><a href="blog.html"><div class="menu-text"><span>b</span><span>l</span><span>o</span><span>g</span></div></a>
-          <ul class="main-dropdown">
-            <li><a href="blog.html">blog</a></li>
-            <li><a href="blog-2.html">blog v.2</a></li>
-            <li><a href="category.html">category</a></li>
-            <li><a href="blog-details.html">blog details</a></li>
-          </ul>
+        <li *ngIf="!isLoggedIn()">
+          <a routerLink="/auth/user/login" (click)="scrollTop()" >
+            <div class="menu-text">
+              <span>l</span><span>o</span><span>g</span><span>i</span><span>n</span>
+            </div>
+          </a>
         </li>
-        <li><a routerLink="/contact" (click)="scrollTop()"><div
-              class="menu-text"><span>c</span><span>o</span><span>n</span><span>t</span><span>a</span><span>c</span><span>t</span></div></a></li>
+        <li *ngIf="isLoggedIn()">
+          <a (click)="scrollTop();onLogOut()" >
+            <div class="menu-text">
+              <span>l</span><span>o</span><span>g</span><span>o</span><span>u</span><span>t</span>
+            </div>
+          </a>
+        </li>
       </ul>
     </div>
     <div class="header__nav-icon-3">
@@ -47,17 +57,15 @@
             <i class="fa-solid fa-user-alt"><i class="fa fa-caret-down"></i></i>
           </a>
           <ul class="main-dropdown">
-            <li><a (click)="scrollTop()"
-              routerLink="/advertiser/allvideocheckout">Promote Video</a></li>
-            <li *ngIf="!isLoggedIn()"><a (click)="scrollTop()"
-              routerLink="/auth/user/login">Login</a></li>
-            <li *ngIf="isLoggedIn()"><a (click)="onLogOut()"
-              routerLink="/auth/user/login">Logout</a></li>
+            <li><a (click)="scrollTop()" routerLink="/advertiser/allvideocheckout">Promote Video</a></li>
+            <li *ngIf="!isLoggedIn()"><a (click)="scrollTop()" routerLink="/auth/user/login">Login</a></li>
+            <li *ngIf="isLoggedIn()"><a (click)="scrollTop()" routerLink="/advertiser/profile">Profile</a></li>
+            <li *ngIf="isLoggedIn()"><a (click)="onLogOut()" routerLink="/auth/user/login">Logout</a></li>
           </ul>
         </li>
       </ul>
-      <button id="open_offcanvas" (click)="toggleMenu()"><img
-          src="assets/imgs/icon/menu-black.png" alt="Menubar Icon"></button>
+      <button id="open_offcanvas" (click)="toggleMenu()"><img src="assets/imgs/icon/menu-black.png"
+          alt="Menubar Icon"></button>
     </div>
   </div>
 </header>
@@ -69,14 +77,13 @@
   <div class="offcanvas__body">
     <div class="offcanvas__left">
       <div class="offcanvas__logo">
-        <a routerLink="/" (click)="scrollTop()"><img
-            src="assets/imgs/logo/site-logo-white-2.png" alt="Offcanvas Logo"></a>
+        <a routerLink="/" (click)="scrollTop()">
+          <h3 class="header__brand sec-title title-anim ng-tns-c19-3" style="color: white">Markutting</h3>
+        </a>
       </div>
       <div class="offcanvas__social">
         <h3 class="social-title">Follow Us</h3>
         <ul>
-          <li><a href="#">Dribbble</a></li>
-          <li><a href="#">Behance</a></li>
           <li><a href="#">Instagram</a></li>
           <li><a href="#">Facebook</a></li>
           <li><a href="#">Twitter</a></li>
@@ -87,176 +94,64 @@
         <ul>
           <li><a routerLink="/about" (click)="scrollTop()">About</a></li>
           <li><a routerLink="/contact" (click)="scrollTop()">contact</a></li>
-          <li><a href="career.html">Career</a></li>
-          <li><a href="blog.html">blog</a></li>
         </ul>
       </div>
     </div>
     <div class="offcanvas__mid">
-      <div class="offcanvas__menu-wrapper mean-container"><div class="mean-bar"><a
-            href="#nav" class="meanmenu-reveal" style="right: 0px; left: auto;
-            display: inline;"><span><span><span></span></span></span></a><nav
-            class="mean-nav">
+      <div class="offcanvas__menu-wrapper mean-container">
+        <div class="mean-bar"><a href="#nav" class="meanmenu-reveal" style="right: 0px; left: auto;
+            display: inline;"><span><span><span></span></span></span></a>
+          <nav class="mean-nav">
             <ul class="menu-anim">
-              <li><a><div class="menu-text"><span>h</span><span>o</span><span>m</span><span>e</span></div></a>
-                <ul style="display: none;">
-                  <li><a routerLink="/" (click)="scrollTop()">Digital Maketing</a></li>
-                  <li><a href="index-dark.html">Digital Maketing dark</a></li>
-                  <li><a href="index-2.html">Design Studio </a></li>
-                  <li><a href="index-2-dark.html">Design Studio dark</a></li>
-                  <li><a href="index-3.html">Digital Agency</a></li>
-                  <li><a href="index-3-dark.html">Digital Agency dark</a></li>
-                  <li><a href="index-7.html">creative Agency</a></li>
-                  <li><a href="index-7-dark.html">creative Agency dark</a></li>
-                  <li><a href="index-6.html">Startup Agency</a></li>
-                  <li><a href="index-6-dark.html">Startup Agency dark</a></li>
-                  <li><a href="index-8.html">modern agency</a></li>
-                  <li><a href="index-8-dark.html">modern agency dark</a></li>
-                  <li><a href="index-4.html">personal Portfolio</a></li>
-                  <li><a href="index-4-dark.html">personal Portfolio dark</a></li>
-                  <li><a href="index-5.html">portfolio showcase</a></li>
-                  <li><a href="index-5-dark.html">portfolio showcase dark</a></li>
-                  <li><a href="index-10.html">showcase carousel</a></li>
-                  <li><a href="index-10-dark.html">showcase carousel dark</a></li>
-                  <li><a href="index-12.html">Interactive link </a></li>
-                  <li><a href="index-12-dark.html">Interactive link dark</a></li>
-                  <li><a href="index-13.html">portfolio masonry</a></li>
-                  <li><a href="index-13-dark.html">portfolio masonry dark</a></li>
-                  <li><a href="index-14.html">vertical grid</a></li>
-                  <li><a href="index-14-dark.html">vertical grid dark</a></li>
-                  <li><a href="index-15.html">Interactive image slider</a></li>
-                  <li><a href="index-15-dark.html">Interactive image slider dark</a></li>
-                  <li><a href="index-16.html">showcase parallax</a></li>
-                  <li><a href="index-16-dark.html">showcase parallax dark</a></li>
-                  <li><a href="index-17.html">logo showcase</a></li>
-                  <li><a href="index-17-dark.html">logo showcase dark</a></li>
-                  <li><a href="index-9.html">showcase slider</a></li>
-                  <li><a href="index-11.html">Interactive hover showcase</a></li>
-                </ul>
-                <a class="mean-expand" href="#" style="font-size: 36px">+</a></li>
-              <li><a routerLink="/about" (click)="scrollTop()"><div
-                    class="menu-text"><span>a</span><span>b</span><span>o</span><span>u</span><span>t</span></div></a></li>
-              <li>
-                <a><div class="menu-text"><span>S</span><span>e</span><span>r</span><span>v</span><span>i</span><span>c</span><span>e</span></div></a>
-                <ul style="display: none;">
-                  <li><a href="service.html">service</a></li>
-                  <li><a href="service-dark.html">service dark</a></li>
-                  <li><a href="service-2.html">service V.2</a></li>
-                  <li><a href="service-2-dark.html">service V.2 dark</a></li>
-                  <li><a href="service-3.html">service V.3</a></li>
-                  <li><a href="service-3-dark.html">service V.3 dark</a></li>
-                  <li><a href="service-4.html">service V.4</a></li>
-                  <li><a href="service-4-dark.html">service V.4 dark</a></li>
-                  <li><a href="service-5.html">service V.5</a></li>
-                  <li><a href="service-5-dark.html">service V.5 dark</a></li>
-                  <li><a href="service-6.html">service V.6</a></li>
-                  <li><a href="service-6-dark.html">service V.6 dark</a></li>
-                  <li><a href="service-details.html">service details</a></li>
-                  <li><a href="service-details-dark.html">service details dark</a></li>
-                </ul>
-                <a class="mean-expand" href="#" style="font-size: 36px">+</a></li>
-              <li><a><div class="menu-text"><span>p</span><span>a</span><span>g</span><span>e</span><span>s</span></div></a>
-                <ul style="display: none;">
-
-                  <li>
-                    <a>Service</a>
-                    <ul style="display: none;">
-                      <li><a href="service.html">service</a></li>
-                      <li><a href="service-dark.html">service dark</a></li>
-                      <li><a href="service-2.html">service V.2</a></li>
-                      <li><a href="service-2-dark.html">service V.2 dark</a></li>
-                      <li><a href="service-3.html">service V.3</a></li>
-                      <li><a href="service-3-dark.html">service V.3 dark</a></li>
-                      <li><a href="service-4.html">service V.4</a></li>
-                      <li><a href="service-4-dark.html">service V.4 dark</a></li>
-                      <li><a href="service-5.html">service V.5</a></li>
-                      <li><a href="service-5-dark.html">service V.5 dark</a></li>
-                      <li><a href="service-6.html">service V.6</a></li>
-                      <li><a href="service-6-dark.html">service V.6 dark</a></li>
-                      <li><a href="service-details.html">service details</a></li>
-                      <li><a href="service-details-dark.html">service details
-                          dark</a></li>
-                    </ul>
-                    <a class="mean-expand" href="#" style="font-size: 36px">+</a></li>
-                  <li>
-                    <a>portfolio</a>
-                    <ul style="display: none;">
-                      <li><a href="portfolio.html">portfolio</a></li>
-                      <li><a href="portfolio-dark.html">portfolio dark</a></li>
-                      <li><a href="portfolio-2.html">portfolio v.2</a></li>
-                      <li><a href="portfolio-2-dark.html">portfolio v.2 dark</a></li>
-                      <li><a href="portfolio-3.html">portfolio v.3</a></li>
-                      <li><a href="portfolio-3-dark.html">portfolio v.3 dark</a></li>
-                      <li><a href="portfolio-4.html">portfolio v.4</a></li>
-                      <li><a href="portfolio-4-dark.html">portfolio v.4 dark</a></li>
-                      <li><a href="portfolio-5.html">portfolio v.5</a></li>
-                      <li><a href="portfolio-5-dark.html">portfolio v.5 dark</a></li>
-                      <li><a href="portfolio-details.html">portfolio details</a></li>
-                      <li><a href="portfolio-details-dark.html">portfolio
-                          details dark</a></li>
-                    </ul>
-                    <a class="mean-expand" href="#" style="font-size: 36px">+</a></li>
-                  <li>
-                    <a>team</a>
-                    <ul style="display: none;">
-                      <li><a href="team.html">Team</a></li>
-                      <li><a href="team-dark.html">Team dark</a></li>
-                      <li><a href="team-details.html">Team Details</a></li>
-                      <li><a href="team-details-dark.html">Team Details dark</a></li>
-                      <li><a href="career.html">career</a></li>
-                      <li><a href="career-dark.html">career dark</a></li>
-                      <li><a href="job-details.html">job details</a></li>
-                      <li><a href="job-details-dark.html">job details dark</a></li>
-                    </ul>
-                    <a class="mean-expand" href="#" style="font-size: 36px">+</a></li>
-                  <li>
-                    <a>blog</a>
-                    <ul style="display: none;">
-                      <li><a href="blog.html">blog</a></li>
-                      <li><a href="blog-dark.html">blog dark</a></li>
-                      <li><a href="blog-2.html">blog v.2</a></li>
-                      <li><a href="blog-2-dark.html">blog v.2 dark</a></li>
-                      <li><a href="category.html">category</a></li>
-                      <li><a href="category-dark.html">category dark</a></li>
-                      <li><a href="blog-details.html">blog details</a></li>
-                      <li><a href="blog-details-dark.html">blog details dark</a></li>
-                    </ul>
-                    <a class="mean-expand" href="#" style="font-size: 36px">+</a></li>
-                  <li>
-                    <a>Others</a>
-                    <ul style="display: none;">
-                      <li><a routerLink="/about" (click)="scrollTop()">about</a></li>
-                      <li><a href="about-dark.html">about dark</a></li>
-                      <li><a href="faq.html">FAQs</a></li>
-                      <li><a href="faq-dark.html">FAQs dark</a></li>
-                      <li><a routerLink="/contact" (click)="scrollTop()">contact</a></li>
-                      <li><a href="contact-dark.html">contact dark</a></li>
-                      <li><a href="404.html">404</a></li>
-                      <li><a href="404-dark.html">404 dark</a></li>
-                    </ul>
-                    <a class="mean-expand" href="#" style="font-size: 36px">+</a></li>
-                </ul>
-                <a class="mean-expand" href="#" style="font-size: 36px">+</a></li>
-              <li><a><div class="menu-text"><span>b</span><span>l</span><span>o</span><span>g</span></div></a>
-                <ul style="display: none;">
-                  <li><a href="blog.html">blog</a></li>
-                  <li><a href="blog-dark.html">blog dark</a></li>
-                  <li><a href="blog-2.html">blog v.2</a></li>
-                  <li><a href="blog-2-dark.html">blog v.2 dark</a></li>
-                  <li><a href="category.html">category</a></li>
-                  <li><a href="category-dark.html">category dark</a></li>
-                  <li><a href="blog-details.html">blog details</a></li>
-                  <li><a href="blog-details-dark.html">blog details dark</a></li>
-                </ul>
-                <a class="mean-expand" href="#" style="font-size: 36px">+</a></li>
-              <li class="mean-last"><a routerLink="/contact"
-                  (click)="scrollTop()"><div class="menu-text"><span>c</span><span>o</span><span>n</span><span>t</span><span>a</span><span>c</span><span>t</span></div></a></li>
+              <li><a routerLink="/" (click)="scrollTop()">
+                  <div class="menu-text"><span>h</span><span>o</span><span>m</span><span>e</span></div>
+                </a>
+              </li>
+              <li><a routerLink="/about" (click)="scrollTop()">
+                  <div class="menu-text"><span>a</span><span>b</span><span>o</span><span>u</span><span>t</span></div>
+                </a>
+              </li>
+              <li><a routerLink="/advertiser/allvideocheckout" (click)="scrollTop()">
+                  <div class="menu-text">
+                    <span>p</span><span>r</span><span>o</span><span>m</span><span>o</span><span>t</span><span>e</span>
+                  </div>
+                </a>
+              </li>
+              <li *ngIf="isLoggedIn()"><a routerLink="/advertiser/profile" (click)="scrollTop()">
+                  <div class="menu-text">
+                    <span>p</span><span>r</span><span>o</span><span>f</span><span>i</span><span>l</span><span>e</span>
+                  </div>
+                </a>
+              </li>
+              <li class="mean-last"><a routerLink="/contact" (click)="scrollTop()">
+                  <div class="menu-text">
+                    <span>c</span><span>o</span><span>n</span><span>t</span><span>a</span><span>c</span><span>t</span>
+                  </div>
+                </a>
+              </li>
+              <li *ngIf="isLoggedIn()">
+                <a (click)="onLogOut()">
+                  <div class="menu-text">
+                    <span>L</span><span>o</span><span>g</span><span>o</span><span>u</span><span>t</span>
+                  </div>
+                </a>
+              </li>
+              <li *ngIf="!isLoggedIn()">
+                <a routerLink="/auth/user/login">
+                  <div class="menu-text">
+                    <span>L</span><span>o</span><span>g</span><span>i</span><span>n</span>
+                  </div>
+                </a>
+              </li>
             </ul>
-          </nav></div>
-        <div class="mean-push"></div><nav class="offcanvas__menu"
-          style="display: none;">
+          </nav>
+        </div>
+        <div class="mean-push"></div>
+        <nav class="offcanvas__menu" style="display: none;">
           <ul class="menu-anim">
-            <li><a><div class="menu-text"><span>h</span><span>o</span><span>m</span><span>e</span></div></a>
+            <li><a>
+                <div class="menu-text"><span>h</span><span>o</span><span>m</span><span>e</span></div>
+              </a>
               <ul>
                 <li><a routerLink="/" (click)="scrollTop()">Digital Maketing</a></li>
                 <li><a href="index-dark.html">Digital Maketing dark</a></li>
@@ -292,10 +187,15 @@
                 <li><a href="index-11.html">Interactive hover showcase</a></li>
               </ul>
             </li>
-            <li><a routerLink="/about" (click)="scrollTop()"><div
-                  class="menu-text"><span>a</span><span>b</span><span>o</span><span>u</span><span>t</span></div></a></li>
+            <li><a routerLink="/about" (click)="scrollTop()">
+                <div class="menu-text"><span>a</span><span>b</span><span>o</span><span>u</span><span>t</span></div>
+              </a></li>
             <li>
-              <a><div class="menu-text"><span>S</span><span>e</span><span>r</span><span>v</span><span>i</span><span>c</span><span>e</span></div></a>
+              <a>
+                <div class="menu-text">
+                  <span>S</span><span>e</span><span>r</span><span>v</span><span>i</span><span>c</span><span>e</span>
+                </div>
+              </a>
               <ul>
                 <li><a href="service.html">service</a></li>
                 <li><a href="service-dark.html">service dark</a></li>
@@ -313,7 +213,9 @@
                 <li><a href="service-details-dark.html">service details dark</a></li>
               </ul>
             </li>
-            <li><a><div class="menu-text"><span>p</span><span>a</span><span>g</span><span>e</span><span>s</span></div></a>
+            <li><a>
+                <div class="menu-text"><span>p</span><span>a</span><span>g</span><span>e</span><span>s</span></div>
+              </a>
               <ul>
                 <li>
                   <a>Service</a>
@@ -393,7 +295,9 @@
                 </li>
               </ul>
             </li>
-            <li><a><div class="menu-text"><span>b</span><span>l</span><span>o</span><span>g</span></div></a>
+            <li><a>
+                <div class="menu-text"><span>b</span><span>l</span><span>o</span><span>g</span></div>
+              </a>
               <ul>
                 <li><a href="blog.html">blog</a></li>
                 <li><a href="blog-dark.html">blog dark</a></li>
@@ -405,8 +309,11 @@
                 <li><a href="blog-details-dark.html">blog details dark</a></li>
               </ul>
             </li>
-            <li><a routerLink="/contact" (click)="scrollTop()"><div
-                  class="menu-text"><span>c</span><span>o</span><span>n</span><span>t</span><span>a</span><span>c</span><span>t</span></div></a></li>
+            <li><a routerLink="/contact" (click)="scrollTop()">
+                <div class="menu-text">
+                  <span>c</span><span>o</span><span>n</span><span>t</span><span>a</span><span>c</span><span>t</span>
+                </div>
+              </a></li>
           </ul>
         </nav>
       </div>

@@ -129,20 +129,20 @@ export class AllvideocheckoutComponent implements OnInit {
     }
     const formBody = Object.assign({}, this.checkoutForm.value,  {views: this.onCountTotalViews() });
     this.orderService.postPlaceOrder(formBody).subscribe((res: any) => {
-      this.razorPayOptions.key = res['key'];
-        this.razorPayOptions.amount = res['value']['amount'];
-        this.razorPayOptions.name = res['name'];
-        this.razorPayOptions.currency = res['currency'];
-        this.razorPayOptions.order_id = res['orderId'];
-        this.razorOrderId = res['orderId'];
-        this.razorPayOptions.handler = this.razorPayResponseHandler.bind(this);
-        let rzp1 = new Razorpay(this.razorPayOptions);
-        rzp1.open();
-        rzp1.on('payment.failed', (response: any) => {
-          // Todo - store this information in the server
-          console.log(response);
-        }
-        );
+      // this.razorPayOptions.key = res['key'];
+      //   this.razorPayOptions.amount = res['value']['amount'];
+      //   this.razorPayOptions.name = res['name'];
+      //   this.razorPayOptions.currency = res['currency'];
+      //   this.razorPayOptions.order_id = res['orderId'];
+      //   this.razorOrderId = res['orderId'];
+      //   this.razorPayOptions.handler = this.razorPayResponseHandler.bind(this);
+      //   let rzp1 = new Razorpay(this.razorPayOptions);
+      //   rzp1.open();
+      //   rzp1.on('payment.failed', (response: any) => {
+      //     // Todo - store this information in the server
+      //     console.log(response);
+      //   }
+      //   );
     }, err => {
       console.log(err);
     })

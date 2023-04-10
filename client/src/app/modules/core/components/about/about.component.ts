@@ -11,4 +11,9 @@ import { fallIn } from 'src/app/shared/common/animations';
 
 export class AboutComponent {
 
+  scrollTop() {
+    window.scrollTo({
+      top: 0
+    });
+  }
 }

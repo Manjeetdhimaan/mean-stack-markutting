@@ -31,4 +31,10 @@ export class HomeComponent {
     }
   }
 
+  scrollTop() {
+    window.scrollTo({
+      top: 0
+    });
+  }
+
 }

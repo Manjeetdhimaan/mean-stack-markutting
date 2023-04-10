@@ -17,7 +17,6 @@ module.exports.getCurrencies = (req, res, next) => {
                 });
             }
         }).catch(err => {
-            console.log(err)
             return next(err);
         })
     } catch (err) {
@@ -48,16 +47,16 @@ module.exports.getCurrency = (req, res, next) => {
     }
 };
 
-module.exports.postOrder = async (req, res, next) => {
+module.exports.postCurrency = async (req, res, next) => {
     try {
         const currency = new Currency({
-            currency: req.body.currency,
+            currency: req.body.currency
         });
         currency.save().then((savedCurrency) => {
             if (!savedCurrency) {
                 return res.status(503).send({
                     success: false,
-                    message: 'Currency can not be placed! Please try again.'
+                    message: 'Currency can not be saved! Please try again.'
                 });
             }
             return res.status(201).send({

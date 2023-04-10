@@ -45,13 +45,13 @@ app.use((err, req, res, next) => {
         res.status(401).send(err);
     }
 });
-// app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 
-// app.use(express.static(path.join(__dirname, 'www')));
+app.use(express.static(path.join(__dirname, 'www')));
 
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'www/index.html'));
-// });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'www/index.html'));
+});
 
 // start server
 app.listen(PORT, () => console.log(`Server started at port : ${PORT}`));
