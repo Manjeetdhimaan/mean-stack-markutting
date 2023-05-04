@@ -10,22 +10,22 @@ import { PrivacyComponent } from './components/privacy/privacy.component';
 
 const routes: Routes = [
     {
-        path: '', component: HomeComponent, pathMatch: 'full', data: {title: 'Buy Views, Likes, Subscribers'}
+        path: '', component: HomeComponent, pathMatch: 'full', title: 'Buy Views, Likes, Subscribers'
     },
     {
-        path: 'about', component: AboutComponent, data: {title: 'About us'}
+        path: 'about', component: AboutComponent, title: 'About us - Markutting'
     },
     {
-        path: 'contact', component: ContactComponent, data: {title: 'Contact us'}
+        path: 'contact', component: ContactComponent, title: 'Contact us - Markutting'
     },
     {
-        path: 'user/terms', component: TermsComponent, data: {title: 'User Terms and Conditions'}
+        path: 'user/terms', component: TermsComponent, title: 'User Terms and Conditions - Markutting'
     },
     {
-        path: 'user/refund', component: RefundComponent, data: {title: 'User Refund Policy'}
+        path: 'user/refund', component: RefundComponent, title: 'User Refund Policy - Markutting'
     },
     {
-        path: 'user/privacy', component: PrivacyComponent, data: {title: 'User Privacy Policy'}
+        path: 'user/privacy', component: PrivacyComponent, title: 'User Privacy Policy - Markutting'
     }
 ]
 @NgModule({

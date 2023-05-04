@@ -40,7 +40,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 tap(
                     event => { },
                     err => {
-                        console.log(err);
+                        console.log("ERROR", err);
                         if (err['statusText'] === "Unknown Error") {
                             // this.toasterMsgService.error(err['statusText']);
                         }

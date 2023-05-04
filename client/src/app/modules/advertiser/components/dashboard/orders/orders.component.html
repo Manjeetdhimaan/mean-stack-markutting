@@ -6,6 +6,7 @@
         <div class="sec-title-wrapper">
           <h2 class="sec-sub-title title-anim">Dashboard</h2>
           <h3 class="sec-title title-anim">View Orders</h3>
+          <h2 class="sec-sub-title title-anim" *ngIf="!orders || orders.length < 1">{{ errMsg }}</h2>
         </div>
         <div class="faq__list-3">
           <div class="accordion" id="accordionExample">

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Order } from 'src/app/shared/models/order.model';
-import { OrderApiService, OrdersSuccessResponse } from 'src/app/shared/services/order-api.service';
-
-
 
 @Component({
   selector: 'app-orders',
@@ -12,13 +10,14 @@ import { OrderApiService, OrdersSuccessResponse } from 'src/app/shared/services/
 export class OrdersComponent implements OnInit {
 
   orders: Order[];
+  errMsg: string;
 
-  constructor( private orderService: OrderApiService ) {}
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.orderService.getUserOrders().subscribe((res: OrdersSuccessResponse) => {
-      this.orders = res['orders'];
-      console.log(this.orders)
-    });
+    // this.orders = this.activatedRoute.snapshot.data['orders'].orders;
+    const resolvedData= this.activatedRoute.snapshot.data['orders'];
+    this.errMsg = resolvedData.error;
+    this.orders = resolvedData.orders;
   }
 }
