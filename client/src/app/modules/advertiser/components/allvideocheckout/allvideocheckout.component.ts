@@ -1,11 +1,12 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { StripeService } from 'ngx-stripe';
+import { switchMap } from 'rxjs';
 
 import { fallIn } from 'src/app/shared/common/animations';
 import { OrderApiService } from 'src/app/shared/services/order-api.service';
 import { environment } from 'src/environments/environment';
 
-declare let Razorpay: any;
 @Component({
   selector: 'app-allvideocheckout',
   templateUrl: './allvideocheckout.component.html',
@@ -59,7 +60,7 @@ export class AllvideocheckoutComponent implements OnInit {
     { value:"Nonprofits and Activism", name: "Nonprofits and Activism", id:"Nonprofits and Activism" }
   ];
 
-  constructor( private fb: FormBuilder, private el: ElementRef, private orderService: OrderApiService ){}
+  constructor( private fb: FormBuilder, private el: ElementRef, private orderService: OrderApiService, private stripeService: StripeService ){}
 
   ngOnInit(): void {
     this.checkoutForm = this.fb.group({
@@ -128,58 +129,16 @@ export class AllvideocheckoutComponent implements OnInit {
       return;
     }
     const formBody = Object.assign({}, this.checkoutForm.value,  {views: this.onCountTotalViews() });
-    this.orderService.postPlaceOrder(formBody).subscribe((res: any) => {
-      // this.razorPayOptions.key = res['key'];
-      //   this.razorPayOptions.amount = res['value']['amount'];
-      //   this.razorPayOptions.name = res['name'];
-      //   this.razorPayOptions.currency = res['currency'];
-      //   this.razorPayOptions.order_id = res['orderId'];
-      //   this.razorOrderId = res['orderId'];
-      //   this.razorPayOptions.handler = this.razorPayResponseHandler.bind(this);
-      //   let rzp1 = new Razorpay(this.razorPayOptions);
-      //   rzp1.open();
-      //   rzp1.on('payment.failed', (response: any) => {
-      //     // Todo - store this information in the server
-      //     console.log(response);
-      //   }
-      //   );
+    const domain = environment.domain;
+    this.orderService.postPlaceOrder(formBody, domain).pipe(
+      switchMap((session: any) => {
+        return this.stripeService.redirectToCheckout({ sessionId: session.sessionId })
+      })
+    ).subscribe((res: any) => {
+      console.log(res);
+      this.stripeService.redirectToCheckout({ sessionId: res.sessionId })
     }, err => {
       console.log(err);
     })
-  }
-
-  razorPayResponseHandler(res: any) {
-    if (res) {
-      this.submitted = true;
-      if (!this.checkoutForm.valid) {
-        return;
-      }
-      this.isLoading = true;
-      const formBody = {
-        age: this.checkoutForm.value.age,
-        gender: this.checkoutForm.value.gender,
-        budget: this.checkoutForm.value.budget,
-        youtubeLink: this.checkoutForm.value.youtubeLink,
-        targetAndWants: this.checkoutForm.value.targetAndWants,
-        location: this.checkoutForm.value.location,
-        country: this.checkoutForm.value.country,
-        videoCategory: this.checkoutForm.value.videoCategory,
-        keywords: this.checkoutForm.value.keywords
-      }
-
-      const formObj = Object.assign({}, formBody, { domain: environment.domain, order_id: this.razorOrderId, userId: this.userId });
-      this.orderService.postOrderResponse(formObj).subscribe((res: any) => {
-        this.isLoading = false;
-        console.log(res);
-        // this.razorPayResMsg = res['message']
-        // this.toastMessageService.success(res['message']);
-          // this.router.navigate(['/account/profile/orders']);
-
-      }, error => {
-        this.isLoading = false;
-        // this.toastMessageService.error('An error occured with payment, please try again');
-        console.log("error", error);
-      })
-    }
   }
 }

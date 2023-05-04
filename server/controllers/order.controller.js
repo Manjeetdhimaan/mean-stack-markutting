@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 const Order = mongoose.model('Order');
 const Razorpay = require('razorpay');
+const User = mongoose.model('User');
 
 const devenv = require('../devenv');
 
-let instance = new Razorpay({
+const stripe = require('stripe')(process.env.STRIPE_SECRET || devenv.STRIPE_SECRET);
+
+const instance = new Razorpay({
     key_id: process.env.KEY_ID || devenv.LOCAL_key_id,
     key_secret: process.env.KEY_SECRET || devenv.LOCAL_key_secret,
 });
@@ -36,7 +39,9 @@ module.exports.getOrders = (req, res, next) => {
 
 module.exports.getUserOrders = (req, res, next) => {
     try {
-        Order.find({user: req._id}).sort({
+        Order.find({
+            user: req._id
+        }).sort({
             'createdAt': -1
         }).then(userOrders => {
             if (!userOrders || userOrders.length < 1) {
@@ -61,19 +66,79 @@ module.exports.getUserOrders = (req, res, next) => {
 module.exports.getOrder = (req, res, next) => {
     try {
         Order.findById(req.params.id)
-        .populate('user', 'fullName email')
-        .then(order => {
-            if (!order || order.length < 1) {
-                return res.status(404).json({
+            .populate('user', 'fullName email')
+            .then(order => {
+                if (!order || order.length < 1) {
+                    return res.status(404).json({
+                        success: false,
+                        message: 'No order found.'
+                    });
+                } else {
+                    return res.status(200).json({
+                        success: true,
+                        order: order
+                    });
+                }
+            }).catch(err => {
+                return next(err);
+            })
+    } catch (err) {
+        return next(err);
+    }
+};
+
+module.exports.postOrder = async (req, res, next) => {
+    try {
+        const lineItems = [{
+            price_data: {
+                currency: 'INR',
+                product_data: {
+                    name: req.body.orderBody.youtubeLink,
+                },
+                unit_amount: +req.body.orderBody.budget * 100
+            },
+            quantity: 1
+        }]
+
+        const session = await stripe.checkout.sessions.create({
+            line_items: lineItems,
+            payment_method_types: ['card'],
+            mode: 'payment',
+            success_url: req.body.domain + '/success?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url: req.body.domain + '/advertiser/allvideocheckout',
+        });
+        const order = new Order({
+            orderDetails: {
+                paymentStatus: 'Pending',
+                payableTotal: req.body.orderBody.budget,
+                planPrice: req.body.orderBody.budget,
+                youtubeLink: req.body.orderBody.youtubeLink,
+                targetAndWants: req.body.orderBody.targetAndWants,
+                location: req.body.orderBody.location,
+                gender: req.body.orderBody.gender,
+                age: req.body.orderBody.age,
+                country: req.body.orderBody.country,
+                videoCategory: req.body.orderBody.videoCategory,
+                keywords: req.body.orderBody.keywords,
+                budget: req.body.orderBody.budget,
+                views: req.body.orderBody.views
+            },
+            orderSessionId: session.id,
+            user: req._id
+        });
+
+        order.save().then(async (savedOrder) => {
+            if (!savedOrder) {
+                return res.status(503).send({
                     success: false,
-                    message: 'No order found.'
-                });
-            } else {
-                return res.status(200).json({
-                    success: true,
-                    order: order
+                    message: 'Order can not be placed! Please try again.'
                 });
             }
+            return res.status(200).json({
+                success: true,
+                message: 'Creating order',
+                sessionId: session.id
+            });
         }).catch(err => {
             return next(err);
         })
@@ -82,92 +147,19 @@ module.exports.getOrder = (req, res, next) => {
     }
 };
 
-module.exports.postOrder = async (req, res, next) => {
-    try {
-        let options = {
-            amount: +req.body.budget * 100, // amount in the smallest currency unit
-            currency: "INR",
-            payment_capture: +req.body.budget * 100
-        };
-
-        instance.orders.create(options, (err, order) => {
-            if (err) {
-                return next(err);
-            }
-            if (order) {
-                return res.status(200).send({
-                    success: true,
-                    message: 'Creating order',
-                    orderId: order.id,
-                    value: order,
-                    userId: req._id,
-                    key: process.env.KEY_ID || devenv.LOCAL_key_id
-                });
-            }
-        });
-
-        // const order = new Order({
-        //     razorPayOrderId: req.body.razorPayOrderId,
-        //     orderDetails: {
-        //         paymentStatus: 'Success',
-        //         payableTotal: req.body.payableTotal,
-        //         planPrice: req.body.planPrice,
-        //         youtubeLink: req.body.youtubeLink,
-        //         targetAndWants: req.body.targetAndWants,
-        //         location: req.body.location,
-        //         gender: req.body.gender,
-        //         age: req.body.age,
-        //         country: req.body.country,
-        //         videoCategory: req.body.videoCategory,
-        //         keywords: req.body.keywords,
-        //         budget: req.body.budget,
-        //         views: req.body.views
-        //     },
-        //     user: req._id
-        // });
-
-        // order.save().then((savedOrder) => {
-        //     if (!savedOrder) {
-        //         return res.status(503).send({
-        //             success: false,
-        //             message: 'Order can not be placed! Please try again.'
-        //         });
-        //     }
-        //     return res.status(201).send({
-        //         success: true,
-        //         message: 'Order placed succussfully!',
-        //         order: savedOrder
-        //     });
-        // }).catch(err => {
-        //     return next(err);
-        // })
-    } catch (err) {
-        return next(err);
-    }
-};
-
 module.exports.postOrderResponse = async (req, res, next) => {
     try {
-         const order = new Order({
-            razorPayOrderId: req.body.razorPayOrderId,
-            orderDetails: {
-                paymentStatus: 'Success',
-                payableTotal: req.body.payableTotal,
-                planPrice: req.body.planPrice,
-                youtubeLink: req.body.youtubeLink,
-                targetAndWants: req.body.targetAndWants,
-                location: req.body.location,
-                gender: req.body.gender,
-                age: req.body.age,
-                country: req.body.country,
-                videoCategory: req.body.videoCategory,
-                keywords: req.body.keywords,
-                budget: req.body.budget,
-                views: req.body.views
-            },
-            user: req._id
+        const user = await User.findById(req._id);
+        const order = await Order.findOne({
+            orderSessionId: req.body.orderSessionId
         });
-
+        if (!order || !user) {
+            return res.status(404).json({
+                success: false,
+                message: 'Order id or User not found'
+            })
+        }
+        order.orderDetails.paymentStatus = "Success";
         order.save().then((savedOrder) => {
             if (!savedOrder) {
                 return res.status(503).send({
@@ -197,7 +189,7 @@ module.exports.updateOrderStatus = (req, res, next) => {
                     message: 'Category not found!'
                 });
             } else {
-                    founededOrder.status = req.body.status;
+                founededOrder.status = req.body.status;
             };
 
             founededOrder.save().then((savedOrder) => {
@@ -246,27 +238,3 @@ module.exports.deleteOrder = (req, res, next) => {
         return next(err);
     };
 };
-
-
-
-// order example 
-
-// {
-//     "orderItems": [
-//         {
-//             "quantity": 3,
-//             "productId": "63f21a57de1e5160ff23a9cc"
-//         },
-//         {
-//             "quantity": 2,
-//             "product": "63f21ba24bd1593b2ca48add"
-//         }
-//     ],
-//     "shippingAddress1": "Address 1",
-//     "shippingAddress2": "Address 2",
-//     "city": "Mohali",
-//     "zip": "123456",
-//     "country": "India",
-//     "phone": "9898989898"
-//     "user": "63f24bde043f5acaf6b8bb27"
-// }

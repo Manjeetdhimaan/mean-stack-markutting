@@ -17,12 +17,13 @@ export class OrderApiService {
 
   constructor(private http: HttpClient) { }
 
-  postPlaceOrder(order:any) {
+  postPlaceOrder(orderBody:any, domain: string) {
+    const order = Object.assign({}, {orderBody, domain: domain});
     return this.http.post(environment.apiBaseUrl + '/orders/post-order', order);
   }
 
-  postOrderResponse(order:any) {
-    return this.http.post(environment.apiBaseUrl + '/orders/post-order-response', order);
+  postOrderResponse(orderSessionId:string) {
+    return this.http.post(environment.apiBaseUrl + '/orders/post-order-response', {orderSessionId});
   }
 
   getUserOrders(): Observable<OrdersSuccessResponse> {

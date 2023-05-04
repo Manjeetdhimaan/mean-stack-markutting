@@ -72,6 +72,10 @@ const orderSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         required: [true, 'Order owner is required'],
         ref: 'User'
+    },
+    orderSessionId: {
+        type: String || null,
+        trim: true
     }
 }, {
     timestamps: true
