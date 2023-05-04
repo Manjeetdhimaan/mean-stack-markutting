@@ -15,7 +15,7 @@ const routes: Routes = [
     path: 'auth', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: 'success', component: SuccessComponent, title: 'Order Placed'
+    path: 'success', component: SuccessComponent, title: 'Order Placed',
   },
   {
     path: '**', component: NotFoundComponent, data: { title: 'Page not found' }
