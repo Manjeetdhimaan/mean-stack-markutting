@@ -7,10 +7,10 @@ const devenv = require('../devenv');
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET || devenv.STRIPE_SECRET);
 
-const instance = new Razorpay({
-    key_id: process.env.KEY_ID || devenv.LOCAL_key_id,
-    key_secret: process.env.KEY_SECRET || devenv.LOCAL_key_secret,
-});
+// const instance = new Razorpay({
+//     key_id: process.env.KEY_ID || devenv.LOCAL_key_id,
+//     key_secret: process.env.KEY_SECRET || devenv.LOCAL_key_secret,
+// });
 
 module.exports.getOrders = (req, res, next) => {
     try {

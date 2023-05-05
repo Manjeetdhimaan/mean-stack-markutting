@@ -34,7 +34,7 @@
                     </div>
                   </div>
                   <small *ngIf="serverErrorMessages?.trim()" class="has-error"> {{ serverErrorMessages }}</small>
-                  <p class="link">Don't have an account?
+                  <p class="link" *ngIf="currentUrl === '/auth/user/login'">Don't have an account?
                     <a routerLink="/auth/user/register" (click)="scrollTop()">Register here</a>
                   </p>
                   <div class="row g-3">
@@ -52,4 +52,3 @@
         </div>
       </section>
       <!-- Contact area end -->
-

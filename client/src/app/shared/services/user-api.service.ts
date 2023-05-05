@@ -45,6 +45,10 @@ export class UserApiService {
     return this.http.post<LoginResponse>(environment.apiBaseUrl + '/users/authenticate', authCredentials, this.noAuthHeader);
   }
 
+  postAdminLogin(authCredentials:LoginData): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(environment.apiBaseUrl + '/users/authenticate-admin', authCredentials, this.noAuthHeader);
+  }
+
   getUserProfile() {
     return this.http.get(environment.apiBaseUrl + '/users/getUserProfile');
   }
@@ -95,6 +99,15 @@ export class UserApiService {
     }
     else
       return null;
+  }
+
+  isAdminLoggedIn() {
+    const userPayload = this.getUserPayload();
+    if (userPayload && userPayload.role.toLowerCase() === 'admin')
+      return userPayload.exp > Date.now() / 1000;
+    else{
+      return false;
+    }
   }
 
   isLoggedIn() {

@@ -25,6 +25,10 @@ export class HeaderComponent {
     return this.userApiService.isLoggedIn();
   }
 
+  isAdminLoggedIn() {
+    return this.userApiService.isAdminLoggedIn();
+  }
+
   onLogOut() {
     this.userApiService.deleteToken();
     this.router.navigate(['/auth/user/login']);

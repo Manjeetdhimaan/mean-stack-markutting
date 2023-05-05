@@ -6,6 +6,7 @@ const jwtHelper = require('../config/jwtHelper');
 
 router.post('/register-user', ctrlUser.postRegisterUser);
 router.post('/authenticate', ctrlUser.authenticate);
+router.post('/authenticate-admin', ctrlUser.authenticateAdmin);
 router.get('/get-user-profile',jwtHelper.verifyJwtToken, ctrlUser.getUserProfile);
 router.patch('/update-user-profile', jwtHelper.verifyJwtToken, ctrlUser.patchUpdateUserProfile);
 router.put('/change-password', jwtHelper.verifyJwtToken, ctrlUser.putChangePassword);

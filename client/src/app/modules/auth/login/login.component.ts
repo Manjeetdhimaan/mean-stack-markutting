@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   isLoading: boolean = false;
   serverErrorMessages: string;
+  currentUrl = '';
 
   constructor( private fb: FormBuilder, private el: ElementRef, private userApiService: UserApiService, private router: Router ) {}
 
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required])
     });
+    this.currentUrl = this.router.url;
   }
 
   get f() {
@@ -46,18 +48,34 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    this.userApiService.postUserLogin(this.loginForm.value).subscribe(
-      (res: LoginResponse) => {
-        this.userApiService.setToken(res['token']);
-        this.router.navigate([`/advertiser/allvideocheckout`]);
-        this.scrollTop();
-        this.isLoading = false;
-      },
-      err => {
-        this.serverErrorMessages = err.error['message'];
-        this.isLoading = false;
-      }
-    );
+    if (this.router.url === '/auth/admin/login') {
+      this.userApiService.postAdminLogin(this.loginForm.value).subscribe(
+        (res: LoginResponse) => {
+          this.userApiService.setToken(res['token']);
+          this.router.navigate([`/admin/orders`]);
+          this.scrollTop();
+          this.isLoading = false;
+        },
+        err => {
+          this.serverErrorMessages = err.error['message'];
+          this.isLoading = false;
+        }
+      );
+    }
+    else {
+      this.userApiService.postUserLogin(this.loginForm.value).subscribe(
+        (res: LoginResponse) => {
+          this.userApiService.setToken(res['token']);
+          this.router.navigate([`/advertiser/allvideocheckout`]);
+          this.scrollTop();
+          this.isLoading = false;
+        },
+        err => {
+          this.serverErrorMessages = err.error['message'];
+          this.isLoading = false;
+        }
+      );
+    }
   }
 
   scrollTop() {

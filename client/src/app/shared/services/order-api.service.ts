@@ -30,6 +30,10 @@ export class OrderApiService {
     return this.http.get<OrdersSuccessResponse>(environment.apiBaseUrl + '/orders/get-user-orders');
   }
 
+  getAllOrders(): Observable<OrdersSuccessResponse> {
+    return this.http.get<OrdersSuccessResponse>(environment.apiBaseUrl + '/orders/get-orders');
+  }
+
   getUserOrder(orderId: string) {
     return this.http.get(environment.apiBaseUrl + '/orders/get-order/' + orderId);
   }

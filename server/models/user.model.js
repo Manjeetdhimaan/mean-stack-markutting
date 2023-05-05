@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
+        required: true,
         default: "user",
         enum: ["user", "admin"]
     },
@@ -52,7 +53,8 @@ userSchema.methods.verifyPassword = function (password) {
 
 userSchema.methods.generateJwt = function(remeberMe)  {
     return jwt.sign({
-            _id: this._id
+            _id: this._id,
+            role: this.role
         },
         process.env.JWT_SECRET || devenv.LOCAL_JWT_SECRET, {
             expiresIn: remeberMe ? '365d' : process.env.JWT_EXP || devenv.LOCAL_JWT_EXP

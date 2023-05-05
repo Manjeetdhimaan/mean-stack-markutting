@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const mongoose = require('mongoose');
-// const Admin = mongoose.model('Admin');
+const User = mongoose.model('User');
 const devenv = require('../devenv');
 
 module.exports.verifyJwtToken = (req, res, next) => {
@@ -31,34 +31,29 @@ module.exports.verifyJwtToken = (req, res, next) => {
     }
 }
 
-// module.exports.isAdmin =  (req, res, next) => {
-//     Admin.findOne({
-//             _id: req._id
-//         },
-//         (err, user) => {
-//             if (err){
-//                 return res.status(500).send({
-//                     auth: false,
-//                     message: err
-//                 });
-// }
-//             // unknown user
-//             else if (!user){
-//                 return res.status(404).send({
-//                     auth: false,
-//                     message: 'Admin not found'
-//                 });
-//            }
-//             // authentication succeeded
-           
-            
-//             else if ( user['role'] !== 'Admin'){
-//                 return res.status(401).send({
-//                     message: 'Not Authenticated.'
-//                 });
-//             }
-//             else{
-//                 next();
-//             }
-//         }).lean();
-// }
+module.exports.isAdmin = (req, res, next) => {
+    User.findOne({ _id: req._id }, (err, user) => {
+            if (err) {
+                return res.status(500).send({
+                    auth: false,
+                    message: err
+                });
+            }
+            // unknown user
+            else if (!user){
+                return res.status(404).send({
+                    auth: false,
+                    message: 'Not Authorized'
+                });
+           }
+            // authentication succeeded
+            else if ( user['role'] !== 'admin'){
+                return res.status(401).send({
+                    message: 'Not Authenticated.'
+                });
+            }
+            else{
+                next();
+            }
+        }).lean();
+}

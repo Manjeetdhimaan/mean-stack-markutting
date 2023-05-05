@@ -135,7 +135,6 @@ export class AllvideocheckoutComponent implements OnInit {
         return this.stripeService.redirectToCheckout({ sessionId: session.sessionId })
       })
     ).subscribe((res: any) => {
-      console.log(res);
       this.stripeService.redirectToCheckout({ sessionId: res.sessionId })
     }, err => {
       console.log(err);

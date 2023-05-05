@@ -20,6 +20,4 @@ export class OrdersResolver implements Resolve<OrdersSuccessResponse> {
       })
     );
   }
-
-
 }
