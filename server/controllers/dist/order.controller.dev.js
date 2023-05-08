@@ -3,18 +3,41 @@
 var mongoose = require('mongoose');
 
 var Order = mongoose.model('Order');
-
-var Razorpay = require('razorpay');
-
 var User = mongoose.model('User');
+
+var nodemailer = require('nodemailer');
 
 var devenv = require('../devenv');
 
-var stripe = require('stripe')(process.env.STRIPE_SECRET || devenv.STRIPE_SECRET); // const instance = new Razorpay({
-//     key_id: process.env.KEY_ID || devenv.LOCAL_key_id,
-//     key_secret: process.env.KEY_SECRET || devenv.LOCAL_key_secret,
-// });
+var stripe = require('stripe')(process.env.STRIPE_SECRET || devenv.STRIPE_SECRET);
 
+var sendOrderMail = function sendOrderMail(currentUser, order) {
+  var transporter = nodemailer.createTransport({
+    host: process.env.MAILER_AUTH_HOST || devenv.MAILER_AUTH_HOST,
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.MAILER_AUTH_EMAIL || devenv.MAILER_AUTH_EMAIL,
+      pass: process.env.MAILER_AUTH_PASS || devenv.MAILER_AUTH_PASS
+    }
+  });
+  var mailOptions = {
+    from: process.env.MAILER_AUTH_EMAIL || devenv.MAILER_AUTH_EMAIL,
+    to: process.env.MAIL_RECIEVER || devenv.MAIL_RECIEVER,
+    subject: 'Order for from Markutting',
+    html: "<h2>".concat(currentUser.fullName.toUpperCase(), " ordered plan on markutting</h2> \n        <h3> Name:  <strong><i>").concat(currentUser.fullName, "</i></strong></h3>\n        <h3> Email:  <strong><i>").concat(currentUser.email, "</i></strong></h3>\n        <h3><strong>Order Details</strong></h3>\n        <h3> Payment Status:  <strong>").concat(order.orderDetails.paymentStatus, "</strong></h3>\n        <h3> Youtube Link:  <strong><a href=").concat(order.orderDetails.youtubeLink, " target=\"_blank\">Youtube Link<a></strong></h3>\n        <h3> Gender:  <strong>").concat(order.orderDetails.gender, "</strong></h3>\n        <h3> Age:  <strong>").concat(order.orderDetails.age, "</strong></h3>\n        <h3> Location:  <strong>").concat(order.orderDetails.location, "</strong></h3>\n        <h3> Country:  <strong>").concat(order.orderDetails.country, "</strong></h3>\n        <h3> Video Category:  <strong>").concat(order.orderDetails.videoCategory ? order.orderDetails.videoCategory : '', "</strong></h3>\n        <h3> Keywords:  <strong>").concat(order.orderDetails.keywords ? order.orderDetails.keywords : '', "</strong></h3>\n        <h3> Budget:  <strong>").concat(order.orderDetails.budget, "</strong></h3>\n        <h3> Currency:  <strong>").concat(order.orderDetails.currency, "</strong></h3>\n        <h3> Views:  <strong>").concat(order.orderDetails.views, "</strong></h3>\n        <div style=\"background-color:#3f51b5; color:white;padding:24px 2px; max-width: 50%; text-align:center\">\n        <a style=\"color:white; text-decoration:none;\" href=\"https://www.markutting.com/admin/orders\">VIEW ORDERS</a></div>\n        ")
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error); //   res.send({error: error})
+    } else {
+      res.send({
+        res: info.response,
+        message: 'Details sent successfully'
+      });
+    }
+  });
+};
 
 module.exports.getOrders = function (req, res, next) {
   try {
@@ -223,6 +246,7 @@ module.exports.postOrderResponse = function _callee3(req, res, next) {
               });
             }
 
+            sendOrderMail(user, savedOrder);
             return res.status(201).send({
               success: true,
               message: 'Order placed succussfully!',

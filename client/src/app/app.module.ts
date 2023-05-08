@@ -25,7 +25,8 @@ import { SuccessComponent } from './components/success/success.component';
     CoreModule,
     BrowserAnimationsModule,
     NgProgressModule.withConfig({
-      color: "black"
+      color: "black",
+      spinner: false
     }),
     NgProgressHttpModule,
   ],

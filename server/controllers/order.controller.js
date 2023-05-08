@@ -1,16 +1,55 @@
 const mongoose = require('mongoose');
 const Order = mongoose.model('Order');
-const Razorpay = require('razorpay');
 const User = mongoose.model('User');
+const nodemailer = require('nodemailer');
 
 const devenv = require('../devenv');
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET || devenv.STRIPE_SECRET);
 
-// const instance = new Razorpay({
-//     key_id: process.env.KEY_ID || devenv.LOCAL_key_id,
-//     key_secret: process.env.KEY_SECRET || devenv.LOCAL_key_secret,
-// });
+const sendOrderMail = (currentUser, order) => {
+    const transporter = nodemailer.createTransport({
+        host: process.env.MAILER_AUTH_HOST || devenv.MAILER_AUTH_HOST,
+        port: 465,
+        secure: true,
+        auth: {
+            user: process.env.MAILER_AUTH_EMAIL || devenv.MAILER_AUTH_EMAIL,
+            pass: process.env.MAILER_AUTH_PASS || devenv.MAILER_AUTH_PASS
+        }
+    });
+
+    const mailOptions = {
+        from: process.env.MAILER_AUTH_EMAIL || devenv.MAILER_AUTH_EMAIL,
+        to: process.env.MAIL_RECIEVER || devenv.MAIL_RECIEVER,
+        subject: 'Order for from Markutting',
+        html: `<h2>${currentUser.fullName.toUpperCase()} ordered plan on markutting</h2> 
+        <h3> Name:  <strong><i>${currentUser.fullName}</i></strong></h3>
+        <h3> Email:  <strong><i>${currentUser.email}</i></strong></h3>
+        <h3><strong>Order Details</strong></h3>
+        <h3> Payment Status:  <strong>${order.orderDetails.paymentStatus}</strong></h3>
+        <h3> Youtube Link:  <strong><a href=${order.orderDetails.youtubeLink} target="_blank">Youtube Link<a></strong></h3>
+        <h3> Gender:  <strong>${order.orderDetails.gender}</strong></h3>
+        <h3> Age:  <strong>${order.orderDetails.age}</strong></h3>
+        <h3> Location:  <strong>${order.orderDetails.location}</strong></h3>
+        <h3> Country:  <strong>${order.orderDetails.country}</strong></h3>
+        <h3> Video Category:  <strong>${order.orderDetails.videoCategory ? order.orderDetails.videoCategory : ''}</strong></h3>
+        <h3> Keywords:  <strong>${order.orderDetails.keywords ? order.orderDetails.keywords : ''}</strong></h3>
+        <h3> Budget:  <strong>${order.orderDetails.budget}</strong></h3>
+        <h3> Currency:  <strong>${order.orderDetails.currency}</strong></h3>
+        <h3> Views:  <strong>${order.orderDetails.views}</strong></h3>
+        <div style="background-color:#3f51b5; color:white;padding:24px 2px; max-width: 50%; text-align:center">
+        <a style="color:white; text-decoration:none;" href="https://www.markutting.com/admin/orders">VIEW ORDERS</a></div>
+        `,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error)
+            //   res.send({error: error})
+        } else {
+            res.send({res: info.response, message: 'Details sent successfully'})
+        }
+    });
+}
 
 module.exports.getOrders = (req, res, next) => {
     try {
@@ -167,6 +206,7 @@ module.exports.postOrderResponse = async (req, res, next) => {
                     message: 'Order can not be placed! Please try again.'
                 });
             }
+            sendOrderMail(user, savedOrder);
             return res.status(201).send({
                 success: true,
                 message: 'Order placed succussfully!',
