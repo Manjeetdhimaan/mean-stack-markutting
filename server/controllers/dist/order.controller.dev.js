@@ -50,7 +50,9 @@ module.exports.getOrders = function (req, res, next) {
           message: 'No orders found.'
         });
       } else {
-        return res.status(200).json({
+        return res.status(200).writeHead(200, {
+          'Content-Type': 'text/event-stream'
+        }).json({
           success: true,
           orders: orders
         });
@@ -66,6 +68,11 @@ module.exports.getOrders = function (req, res, next) {
 
 module.exports.getUserOrders = function (req, res, next) {
   try {
+    res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive'
+    });
     Order.find({
       user: req._id
     }).sort({

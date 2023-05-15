@@ -42,7 +42,7 @@ export class UserApiService {
   }
 
   postUserLogin(authCredentials:LoginData): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(environment.apiBaseUrl + '/users/authenticate', authCredentials, this.noAuthHeader);
+    return this.http.post<LoginResponse>(environment.apiBaseUrl + '/users/authenticate', authCredentials, {reportProgress: true});
   }
 
   postAdminLogin(authCredentials:LoginData): Observable<LoginResponse> {
@@ -50,7 +50,7 @@ export class UserApiService {
   }
 
   getUserProfile() {
-    return this.http.get(environment.apiBaseUrl + '/users/getUserProfile');
+    return this.http.get(environment.apiBaseUrl + '/users/getUserProfile', {reportProgress: true});
   }
 
   postContactForm(form:any) {
@@ -103,7 +103,7 @@ export class UserApiService {
 
   isAdminLoggedIn() {
     const userPayload = this.getUserPayload();
-    if (userPayload && userPayload.role.toLowerCase() === 'admin')
+    if (userPayload && userPayload.role?.toLowerCase() === 'admin')
       return userPayload.exp > Date.now() / 1000;
     else{
       return false;

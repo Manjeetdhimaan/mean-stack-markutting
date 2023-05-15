@@ -17,7 +17,35 @@ const PORT = process.env.PORT || devENV.LOCAL_PORT;
 // const rtsAdmin = require('./routes/admin.router');
 
 const app = express();
-app.use(cors());
+
+app.use((req, res, next) => {
+    // req.writeHead({
+    //     'Content-Type': 'text/event-stream'
+    // })
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Content-Length, Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length"
+    );
+    res.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET, POST, PATCH, PUT, DELETE, OPTIONS"
+    );
+    
+    next();
+});
+
+// var options = {  
+//     host: 'reportsapi.zoho.com',  
+//     port: 443,  
+//     path: '/api/username/FA/AA',  
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/x-www-form-urlencoded',
+//         'Content-Length': Buffer.byteLength(p)
+//     } 
+//   }
+// app.use(cors());
 app.use(compression());
 
 // middleware

@@ -11,6 +11,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { CoreModule } from './modules/core/core.module';
 import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { SuccessComponent } from './components/success/success.component';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -23,12 +24,13 @@ import { SuccessComponent } from './components/success/success.component';
     BrowserModule,
     AppRoutingModule,
     CoreModule,
+    SharedModule,
     BrowserAnimationsModule,
     NgProgressModule.withConfig({
       color: "black",
       spinner: false
     }),
-    NgProgressHttpModule,
+    NgProgressHttpModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

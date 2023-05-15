@@ -27,11 +27,11 @@ export class OrderApiService {
   }
 
   getUserOrders(): Observable<OrdersSuccessResponse> {
-    return this.http.get<OrdersSuccessResponse>(environment.apiBaseUrl + '/orders/get-user-orders');
+    return this.http.get<OrdersSuccessResponse>(environment.apiBaseUrl + '/orders/get-user-orders', {reportProgress: true});
   }
 
   getAllOrders(): Observable<OrdersSuccessResponse> {
-    return this.http.get<OrdersSuccessResponse>(environment.apiBaseUrl + '/orders/get-orders');
+    return this.http.get<OrdersSuccessResponse>(environment.apiBaseUrl + '/orders/get-orders', {reportProgress: true});
   }
 
   getUserOrder(orderId: string) {

@@ -19,6 +19,7 @@ var not_found_component_1 = require("./components/not-found/not-found.component"
 var core_module_1 = require("./modules/core/core.module");
 var auth_interceptor_1 = require("./shared/auth/auth.interceptor");
 var success_component_1 = require("./components/success/success.component");
+var shared_module_1 = require("./shared/shared.module");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -33,12 +34,13 @@ var AppModule = /** @class */ (function () {
                 platform_browser_1.BrowserModule,
                 app_routing_module_1.AppRoutingModule,
                 core_module_1.CoreModule,
+                shared_module_1.SharedModule,
                 animations_1.BrowserAnimationsModule,
                 ngx_progressbar_1.NgProgressModule.withConfig({
                     color: "black",
                     spinner: false
                 }),
-                http_2.NgProgressHttpModule,
+                http_2.NgProgressHttpModule
             ],
             providers: [{
                     provide: http_1.HTTP_INTERCEPTORS,

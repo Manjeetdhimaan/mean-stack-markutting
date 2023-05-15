@@ -21,10 +21,10 @@ var OrderApiService = /** @class */ (function () {
         return this.http.post(environment_1.environment.apiBaseUrl + '/orders/post-order-response', { orderSessionId: orderSessionId });
     };
     OrderApiService.prototype.getUserOrders = function () {
-        return this.http.get(environment_1.environment.apiBaseUrl + '/orders/get-user-orders');
+        return this.http.get(environment_1.environment.apiBaseUrl + '/orders/get-user-orders', { reportProgress: true });
     };
     OrderApiService.prototype.getAllOrders = function () {
-        return this.http.get(environment_1.environment.apiBaseUrl + '/orders/get-orders');
+        return this.http.get(environment_1.environment.apiBaseUrl + '/orders/get-orders', { reportProgress: true });
     };
     OrderApiService.prototype.getUserOrder = function (orderId) {
         return this.http.get(environment_1.environment.apiBaseUrl + '/orders/get-order/' + orderId);

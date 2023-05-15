@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { SafePipe } from './pipes/safe.pipe';
 import { ContactDataComponent } from './components/reusuable-components/contact-data/contact-data.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProgressBarComponent } from './components/ui-components/progress-bar/progress-bar.component';
 
 
 
 @NgModule({
   declarations: [
     SafePipe,
-    ContactDataComponent
+    ContactDataComponent,
+    ProgressBarComponent
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   exports: [
     SafePipe,
-    ContactDataComponent
+    ContactDataComponent,
+    ProgressBarComponent
   ]
 })
 export class SharedModule { }
