@@ -18,22 +18,22 @@ const PORT = process.env.PORT || devENV.LOCAL_PORT;
 
 const app = express();
 
-app.use((req, res, next) => {
-    // req.writeHead({
-    //     'Content-Type': 'text/event-stream'
-    // })
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader(
-        "Access-Control-Allow-Headers",
-        "Content-Length, Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length"
-    );
-    res.setHeader(
-        "Access-Control-Allow-Methods",
-        "GET, POST, PATCH, PUT, DELETE, OPTIONS"
-    );
+// app.use((req, res, next) => {
+//     // req.writeHead({
+//     //     'Content-Type': 'text/event-stream'
+//     // })
+//     res.setHeader("Access-Control-Allow-Origin", "*");
+//     res.setHeader(
+//         "Access-Control-Allow-Headers",
+//         "Content-Length, Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length"
+//     );
+//     res.setHeader(
+//         "Access-Control-Allow-Methods",
+//         "GET, POST, PATCH, PUT, DELETE, OPTIONS"
+//     );
     
-    next();
-});
+//     next();
+// });
 
 // var options = {  
 //     host: 'reportsapi.zoho.com',  
@@ -45,7 +45,7 @@ app.use((req, res, next) => {
 //         'Content-Length': Buffer.byteLength(p)
 //     } 
 //   }
-// app.use(cors());
+app.use(cors());
 app.use(compression());
 
 // middleware

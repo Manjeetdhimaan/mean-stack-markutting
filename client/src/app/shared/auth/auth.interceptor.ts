@@ -29,23 +29,22 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(clonedreq).pipe(
                 tap(
                     event => {
-                      if (event.type === HttpEventType.DownloadProgress && event.total) {
-                        // here we get the updated progress values, call your service or what ever here
-                        this.progressBarSer.returnProgress(event.loaded/event.total);
-                        // this.spinnerService.updateGlobalProgress(Math.round(event.loaded / event.total * 100)); // display & update progress bar
-                        const percentage = Math.round(100 * event.loaded / event.total);
-                        console.log(percentage);
-                      } else if (event.type === HttpEventType.Response) {
-                        this.progressBarSer.returnProgress(null);
-                        // this.spinnerService.updateGlobalProgress(null); // hide progress bar
-                      }
-                     },
+                        if (event.type === HttpEventType.DownloadProgress && event.total) {
+                            // here we get the updated progress values, call your service or what ever here
+                            this.progressBarSer.returnProgress(event.loaded / event.total);
+                            // this.spinnerService.updateGlobalProgress(Math.round(event.loaded / event.total * 100)); // display & update progress bar
+                            const percentage = Math.round(100 * event.loaded / event.total);
+                            console.log(percentage);
+                        } else if (event.type === HttpEventType.Response) {
+                            this.progressBarSer.returnProgress(null);
+                            // this.spinnerService.updateGlobalProgress(null); // hide progress bar
+                        }
+                    },
                     err => {
                         console.log("ERROR", err);
                         if (err['statusText'] === "Unknown Error") {
                             // this.toasterMsgService.error(err['statusText']);
                         }
-
                     })
             );
         }
